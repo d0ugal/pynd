@@ -1,0 +1,38 @@
+language: python
+python: '3.5'
+env:
+  matrix:
+  - TOXENV=py27
+  - TOXENV=py33
+  - TOXENV=py34
+  - TOXENV=py35
+  - TOXENV=flake8
+  - TOXENV=docs
+  global:
+  - secure: j/KwhHqw4UZ9R4EwbwKqI/+x1ExX3+fXpD/c3knnq49nKZ7nV5aze7i7ZpP3KGWNZIYQoqjNNb0jfw14zbPWLHZW81jk6ua6ZosIjrBdlRpF7D3KLicMfOIX9ZFYh/T09um2hlup6eUXaE9CqUSfVs8gcNaDiJyZuNSrfzKmjTGP7oyfVp6gs1KYE89NzbedULkQjJVxita4DVq3jWghM18pVyJD5CwDWVgCK6BHttmQMiHB383r1blSWlx+ON+78HopKJjhdMHp6c63zJzlgdEdwzIKUMdHZ+jT15lCkDTAqS2Yz6TIW3CEBVuUUgRVXJu6Sfaa+rplztORVBfxaFuZTP76lcl+24GWAolLiIbK81rVUNibcYN+7L7tGXopqTt9grllrcm/bMc7AXCbKqc2JNBMVFP+wNfkQ9BzM/9l51rD7M9XKrESIN3UTLzW2smX89w5j2Wqhfi1zB2/mvJtirV/snrycAsyKA+69muPEfzSq06mAdt2Ezeg7kFlEzbpKsA0F6tt5YQKUsUdwu+t9bOJKun0h8B63SMhOeE63tfmZasrgYPWO/C4AKrehOc0CCskL966dBwV8PSZfnNmT2++WsS42Scmco48DJuZNVq36TUtjOBQeOJb8Rt3V6MIRsfwcPVWIVWQx9v3q/iHnzv7nyzMa+Eqjb46hmg=
+  - secure: IoIl+OUDEVA6UlCg3qhzqZtB9un4kbVPE7/10GN49rtn92y35XJ3vzi60SUMwY38vPth3MDF9/k3iQLdZKodWPWAaiMD0XaWAM2EsO5gB2V0rtocTOEykqAQMTM3mpSQMzdi5wQOVQEl+2b9kHHlBkvuvX8w4tmtXx91ZAlt/lc7WGKhsCbxmXQrWcvPiOXtMpWOLeiW3yzbK2oJtSGRSFJv+u2tPGAKTGE7qmjCvRrzEVMkSomgDzWFi2jzJvfciBvmGr01i4nxRomhkQhl8RSxAdz+jlpNWByJZDOB4zxX/ev2cM4uZzBjnKVxtQfe+XO7uEG6Dg0dX5XmmKgmOkjJtVCpxS5q/L5gzycyonN+cSHBLnCAU9UfHt0GX+V5Q+S6fRv15XMRKDuVdCY9NQwd+bxl3M77/woUjsTTQjiW5AFr1pbmlN1qRVG0q5BESAqdC7fFCezwaKPaljp1sXhAhdKxql21T2eLsQg0pUJe2/gzaXxizDtRXB7SEw2sr2UNCe2QHQtMG3fCjyXox/WoKlJzAOyZPWvhlGg4tK6zifea9b9N7En4xYejqCiYSIHbxGsavzGmJpnDZKFXj1Kmv8bKrRvR0GHTexZ3gXzLEnfX9UH/xRQluK1wl/6mZkij2uIks0s3heCQskfqBvAGI1DvRkTuJLEm2DsyXmE=
+  - secure: m0OO1oVkrMjCdx3GtPve1sEzBQ8VyyyZahALp6BE2T5SGHYlR/Y4OYhbnTH/5Izw04DJ3fvrkkOgkz092gvzysztYzUjJpJkeRAA+uQQOHVAfBdvgeMc2x10GrMuI/13sr2ke3xKkAlr1RgCIpc/msboRYTkxutVCKM4vqY57bSJkMZWBH5CyAtW00P5kaF/69ICt8KkeA1kHHOO6tWL761Lxvv0q3U4CWM6BNNanEhVa/1KotdumHjO/Y//C54Nhs+2ciFbwKL8UAOpVulEtREt+4xF2aoZ/2IRODiY4CVQ7LBFyotRnsj9qI7Y5mrYTAnoBCgh9Dcgrs1rm7u5i644gnO5aISaodMh6rDm9CU7bDtY9xamoL9e5Q7OXKiOHHWmcLlH9AmtsOsVclLtMUdGChm3Iq3JtuqMPvsmGt0iqFR9zmWqQRbf+xGqseAkYr9Erzl3jzDpiJSJ7CflREXtqqo5Qx8ZAIVgGAGFgw2rz18ENfxHHMptF9ECus1ZPNgI3suawZEYG+brQNsN8O71yPfZuzP+x+V31NB0DAr+8HSR6jhanMpzkVHVTATV5cNzfXMApMpTrrG6ohPLuM46p6Voe9Jfm/otnZ31ZOrdSlYxio/m4d/h/vpkj2RK3V86QhBMgb0mpVzaARJC73+s0yt8WG7HYhM1Y0K3NqI=
+install:
+- pip install tox
+script:
+- tox
+matrix:
+  fast_finish: true
+before_install: pip install codecov
+after_success:
+- git config user.name "Dougal Matthews";
+- git config user.email "dougal@dougalmatthews.com";
+- git remote add gh-token "https://${GH_TOKEN}@github.com/d0ugal/pynd.git";
+- git fetch gh-token && git fetch gh-token gh-pages:gh-pages;
+- pip install -IU -r test-requirements.txt .;
+- mkdocs gh-deploy -v --clean --remote-name gh-token;
+deploy:
+  provider: pypi
+  user: d0ugal-deploy
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    repo: d0ugal/pynd
+    condition: "$TOXENV = py35"
+  password:
+    secure: Bw8tUdYs7FY7tkbNHJ27xv3d2WxHy7Vew+w/j7F6GKSm7EyP+IlKHzll8pmbicVLJBfEP1fpNVWAJn+MBstP/xJq9NVzDnlfIpL/v3VGMTb3YxtFUfU0XBhwPd4xN9BL8w8MLkNn5oorZObEfO9aNrmL+kU1I8hWM3VBdR7VpUZOKnsci/y8ZSCEyrfVyJtKqB16zTcR0eEsxf1wPWqaBTmP+VJuXuMkpKEiVLVq6yY8UOf1PZWYm02OSIyZXHJW2yz4WfS6cG3Pgvi60RIlp9lSLBNz2xQNioAD7lC/pdj4pwE9OeLpfAgh33B8MFahaQbDczKFAZ66Z7hUUeA4o9wDeqgZngLS1UPblvyzOhJFWa2DWYKW7NqVzrwraIzGZ7DSeq6BfKXlhzEs+4eoIn3KKLDpAAtboPq/H0YRZFXXLreUz3q3cKvL4+YlkE5et8xDu6ls4SBfW9YPlrFRRkcHHLOx2LHICNVEHFVJBV9S5zrnuMs5+QNNtnZX9/UhvnXX5cwvuNU9t6IzoIQDYIhyv366oet16eTh6CckmJd1nsxoQrZHoCrODzak5Or6TNoUPbxWPIHo986dybY8kJ2sJFay2rKJFwivSaAPtDkEcwT+CnkWlt3iTobmaHFSHDGyITy0rUYjKvADxnFiCgqdw4xhyzB+/vBsIP/QDvg=

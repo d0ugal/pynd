@@ -1,17 +1,29 @@
-import argparse
+import logging
 import sys
 
-from pynd import search
+from . import cli
+from . import search
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('files', nargs='+')
-    args = parser.parse_args()
-    return args
 
-def main():
-    args = parse_args()
-    search(args.files)
+def main(sysargs=None):
+
+    sysargs = sys.argv[1:] if sysargs is None else sysargs
+    args = cli.parse_args(sysargs)
+    cli.setup_logging(args)
+
+    LOG = logging.getLogger(__name__)
+    LOG.debug("Started with args: %r", args)
+
+    if len(sysargs) == 0:
+        parser = cli.create_parser()
+        parser.print_help()
+        return 1
+
+    try:
+        search.search(args)
+    except KeyboardInterrupt:
+        return
+
 
 if __name__ == '__main__':
     sys.exit(main())
