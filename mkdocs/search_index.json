@@ -1,0 +1,24 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Pynd\n\u00b6\n\n\nYou say it like find, but with a p.\n\n\nWhat & Why?\n\u00b6\n\n\nPynd is a bit like grep, but it understand Python syntax. This means you can\ndo things like search within docstrings only or list and search function names.\n\n\nIt is a command line utility only.\n\n\nUsage Examples\n\u00b6",
+            "title": "Home"
+        },
+        {
+            "location": "/#pynd",
+            "text": "You say it like find, but with a p.",
+            "title": "Pynd"
+        },
+        {
+            "location": "/#what-why",
+            "text": "Pynd is a bit like grep, but it understand Python syntax. This means you can\ndo things like search within docstrings only or list and search function names.  It is a command line utility only.",
+            "title": "What &amp; Why?"
+        },
+        {
+            "location": "/#usage-examples",
+            "text": "",
+            "title": "Usage Examples"
+        }
+    ]
+}
