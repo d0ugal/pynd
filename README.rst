@@ -1,4 +1,5 @@
 Pynd
 =======
 
-
+- Lowercase
+- Wildcard

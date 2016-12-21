@@ -1,0 +1,36 @@
+language: python
+python: '3.5'
+env:
+  matrix:
+  - TOXENV=py27
+  - TOXENV=py33
+  - TOXENV=py34
+  - TOXENV=py35
+  - TOXENV=flake8
+  - TOXENV=docs
+  global:
+    secure: j/KwhHqw4UZ9R4EwbwKqI/+x1ExX3+fXpD/c3knnq49nKZ7nV5aze7i7ZpP3KGWNZIYQoqjNNb0jfw14zbPWLHZW81jk6ua6ZosIjrBdlRpF7D3KLicMfOIX9ZFYh/T09um2hlup6eUXaE9CqUSfVs8gcNaDiJyZuNSrfzKmjTGP7oyfVp6gs1KYE89NzbedULkQjJVxita4DVq3jWghM18pVyJD5CwDWVgCK6BHttmQMiHB383r1blSWlx+ON+78HopKJjhdMHp6c63zJzlgdEdwzIKUMdHZ+jT15lCkDTAqS2Yz6TIW3CEBVuUUgRVXJu6Sfaa+rplztORVBfxaFuZTP76lcl+24GWAolLiIbK81rVUNibcYN+7L7tGXopqTt9grllrcm/bMc7AXCbKqc2JNBMVFP+wNfkQ9BzM/9l51rD7M9XKrESIN3UTLzW2smX89w5j2Wqhfi1zB2/mvJtirV/snrycAsyKA+69muPEfzSq06mAdt2Ezeg7kFlEzbpKsA0F6tt5YQKUsUdwu+t9bOJKun0h8B63SMhOeE63tfmZasrgYPWO/C4AKrehOc0CCskL966dBwV8PSZfnNmT2++WsS42Scmco48DJuZNVq36TUtjOBQeOJb8Rt3V6MIRsfwcPVWIVWQx9v3q/iHnzv7nyzMa+Eqjb46hmg=
+install:
+- pip install tox
+script:
+- tox
+matrix:
+  fast_finish: true
+before_install: pip install codecov
+after_success:
+- git config user.name "Dougal Matthews";
+- git config user.email "dougal@dougalmatthews.com";
+- git remote add gh-token "https://${GH_TOKEN}@github.com/d0ugal/pynd.git";
+- git fetch gh-token && git fetch gh-token gh-pages:gh-pages;
+- pip install -IU -r test-requirements.txt .;
+- mkdocs gh-deploy -v --clean --remote-name gh-token;
+deploy:
+  provider: pypi
+  user: d0ugal-deploy
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    repo: d0ugal/pynd
+    condition: "$TOXENV = py35"
+  password:
+    secure: Bw8tUdYs7FY7tkbNHJ27xv3d2WxHy7Vew+w/j7F6GKSm7EyP+IlKHzll8pmbicVLJBfEP1fpNVWAJn+MBstP/xJq9NVzDnlfIpL/v3VGMTb3YxtFUfU0XBhwPd4xN9BL8w8MLkNn5oorZObEfO9aNrmL+kU1I8hWM3VBdR7VpUZOKnsci/y8ZSCEyrfVyJtKqB16zTcR0eEsxf1wPWqaBTmP+VJuXuMkpKEiVLVq6yY8UOf1PZWYm02OSIyZXHJW2yz4WfS6cG3Pgvi60RIlp9lSLBNz2xQNioAD7lC/pdj4pwE9OeLpfAgh33B8MFahaQbDczKFAZ66Z7hUUeA4o9wDeqgZngLS1UPblvyzOhJFWa2DWYKW7NqVzrwraIzGZ7DSeq6BfKXlhzEs+4eoIn3KKLDpAAtboPq/H0YRZFXXLreUz3q3cKvL4+YlkE5et8xDu6ls4SBfW9YPlrFRRkcHHLOx2LHICNVEHFVJBV9S5zrnuMs5+QNNtnZX9/UhvnXX5cwvuNU9t6IzoIQDYIhyv366oet16eTh6CckmJd1nsxoQrZHoCrODzak5Or6TNoUPbxWPIHo986dybY8kJ2sJFay2rKJFwivSaAPtDkEcwT+CnkWlt3iTobmaHFSHDGyITy0rUYjKvADxnFiCgqdw4xhyzB+/vBsIP/QDvg=
