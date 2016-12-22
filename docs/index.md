@@ -16,6 +16,11 @@ $ pynd -h
     pynd is in very early stages of development. Almost anything could change
     without warning. You have been warned ;-)
 
+### Platform support
+
+We recommend Python 3.4 or above. pynd was written for Python 3 and backported
+to Python 2.7. It is supported and tested under Linux and OSX. Python 2 and
+Windows support are done on a "best effort" basis.
 
 ## What & Why?
 
