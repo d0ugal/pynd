@@ -2,23 +2,48 @@
     "docs": [
         {
             "location": "/",
-            "text": "Pynd\n\u00b6\n\n\nYou say it like find, but with a p.\n\n\nWhat & Why?\n\u00b6\n\n\nPynd is a bit like grep, but it understand Python syntax. This means you can\ndo things like search within docstrings only or list and search function names.\n\n\nIt is a command line utility only.\n\n\nUsage Examples\n\u00b6\n\n\nThese will be coming. Soon. You know, when it does something.",
+            "text": "pynd - search within Python code\n\u00b6\n\n\nYou say it like find, but with a p. pind.\n\n\nInstallation\n\u00b6\n\n\nWe recommend installation with pip.\n\n\n$ pip install pynd\n$ pynd -h\n\n\n\n\n\n\n\nWarning\n\n\npynd is in very early stages of development. Almost anything could change\nwithout warning. You have been warned ;-)\n\n\n\n\nWhat & Why?\n\u00b6\n\n\nPynd is a bit like grep, but it understand Python syntax. This means you can\ndo things like search within docstrings only or list and search function names.\n\n\nUsage Examples\n\u00b6\n\n\nListing and searching within Python\n\u00b6\n\n\nList all the Python classes in every Python file under the current working\ndirectory.\n\n\n$ pynd --class\n\n\n\n\n\nFind all classes that match a pattern.\n\n\n$ pynd MyClass --class\n\n\n\n\n\nThe \n--class\n argument can be replaced or used in combination with other node\ntypes. For example, find all functions or classes that contain the word \ntest\n.\n\n\n$ pynd \ntest\n --class --def --ignore-case\n\n\n\n\n\nDocstrings\n\u00b6\n\n\nSearching within docstrings is simple with pynd. It works in a similar way\nas the other node matches, but it will output the full docstring and the \nclass or function that it is attached to.\n\n\n$ pynd TODO --doc\n\n\n\n\n\nThe above search will find all docstrings that contain TODO. If no term is \nprovided, then all docstrings will be output.\n\n\nSupported Node Types\n\u00b6\n\n\npynd currently supports the following node types.\n\n\n\n\n--class\n - Matches classes.\n\n\n--def\n - All function definitions.\n\n\n--import\n - matches import statements\n\n\n--doc\n - matches within docstrings\n\n\n\n\nShow full usage\n\u00b6\n\n\n$ pynd -h\nusage: pynd \n[\n-h\n]\n \n[\n--ignore-dir \n[\nIGNORE_DIR \n[\nIGNORE_DIR ...\n]]]\n \n[\n--verbose\n]\n\n            \n[\n--debug\n]\n \n[\n--ignore-case\n]\n \n[\n--files-with-matches\n]\n \n[\n-d\n]\n \n[\n-c\n]\n \n[\n-f\n]\n\n            \n[\n-i\n]\n\n            \n[\nPATTERN\n]\n \n[\nFILES OR DIRECTORIES \n[\nFILES OR DIRECTORIES ...\n]]\n\n\npositional arguments:\n  PATTERN\n  FILES OR DIRECTORIES\n\noptional arguments:\n  -h, --help            show this \nhelp\n message and \nexit\n\n  --ignore-dir \n[\nIGNORE_DIR \n[\nIGNORE_DIR ...\n]]\n\n  --verbose\n  --debug\n  --ignore-case\n  --files-with-matches\n  -d, --doc\n  -c, --class\n  -f, --def\n  -i, --import",
             "title": "Home"
         },
         {
-            "location": "/#pynd",
-            "text": "You say it like find, but with a p.",
-            "title": "Pynd"
+            "location": "/#pynd-search-within-python-code",
+            "text": "You say it like find, but with a p. pind.",
+            "title": "pynd - search within Python code"
+        },
+        {
+            "location": "/#installation",
+            "text": "We recommend installation with pip.  $ pip install pynd\n$ pynd -h   Warning  pynd is in very early stages of development. Almost anything could change\nwithout warning. You have been warned ;-)",
+            "title": "Installation"
         },
         {
             "location": "/#what-why",
-            "text": "Pynd is a bit like grep, but it understand Python syntax. This means you can\ndo things like search within docstrings only or list and search function names.  It is a command line utility only.",
+            "text": "Pynd is a bit like grep, but it understand Python syntax. This means you can\ndo things like search within docstrings only or list and search function names.",
             "title": "What &amp; Why?"
         },
         {
             "location": "/#usage-examples",
-            "text": "These will be coming. Soon. You know, when it does something.",
+            "text": "",
             "title": "Usage Examples"
+        },
+        {
+            "location": "/#listing-and-searching-within-python",
+            "text": "List all the Python classes in every Python file under the current working\ndirectory.  $ pynd --class  Find all classes that match a pattern.  $ pynd MyClass --class  The  --class  argument can be replaced or used in combination with other node\ntypes. For example, find all functions or classes that contain the word  test .  $ pynd  test  --class --def --ignore-case",
+            "title": "Listing and searching within Python"
+        },
+        {
+            "location": "/#docstrings",
+            "text": "Searching within docstrings is simple with pynd. It works in a similar way\nas the other node matches, but it will output the full docstring and the \nclass or function that it is attached to.  $ pynd TODO --doc  The above search will find all docstrings that contain TODO. If no term is \nprovided, then all docstrings will be output.",
+            "title": "Docstrings"
+        },
+        {
+            "location": "/#supported-node-types",
+            "text": "pynd currently supports the following node types.   --class  - Matches classes.  --def  - All function definitions.  --import  - matches import statements  --doc  - matches within docstrings",
+            "title": "Supported Node Types"
+        },
+        {
+            "location": "/#show-full-usage",
+            "text": "$ pynd -h\nusage: pynd  [ -h ]   [ --ignore-dir  [ IGNORE_DIR  [ IGNORE_DIR ... ]]]   [ --verbose ] \n             [ --debug ]   [ --ignore-case ]   [ --files-with-matches ]   [ -d ]   [ -c ]   [ -f ] \n             [ -i ] \n             [ PATTERN ]   [ FILES OR DIRECTORIES  [ FILES OR DIRECTORIES ... ]] \n\npositional arguments:\n  PATTERN\n  FILES OR DIRECTORIES\n\noptional arguments:\n  -h, --help            show this  help  message and  exit \n  --ignore-dir  [ IGNORE_DIR  [ IGNORE_DIR ... ]] \n  --verbose\n  --debug\n  --ignore-case\n  --files-with-matches\n  -d, --doc\n  -c, --class\n  -f, --def\n  -i, --import",
+            "title": "Show full usage"
         }
     ]
 }

@@ -15,15 +15,15 @@
         <meta name="description" content="Search Python code.">
       
       
-        <link rel="canonical" href="http://d0ugal.github.io/retrace/">
+        <link rel="canonical" href="http://d0ugal.github.io/pynd/">
       
       
         <meta name="author" content="Dougal Matthews">
       
     
-    <meta property="og:url" content="http://d0ugal.github.io/retrace/">
+    <meta property="og:url" content="http://d0ugal.github.io/pynd/">
     <meta property="og:title" content="Pynd">
-    <meta property="og:image" content="http://d0ugal.github.io/retrace//./">
+    <meta property="og:image" content="http://d0ugal.github.io/pynd//./">
     <meta name="apple-mobile-web-app-title" content="Pynd">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -135,7 +135,7 @@
       <div class="drawer">
         <nav aria-label="Navigation">
   
-  <a href="https://github.com/d0ugal/retrace" class="project">
+  <a href="https://github.com/d0ugal/pynd" class="project">
     <div class="banner">
       
       <div class="name">
@@ -147,7 +147,7 @@
         </strong>
         
           <br>
-          d0ugal/retrace
+          d0ugal/pynd
         
       </div>
     </div>
@@ -158,12 +158,12 @@
         <ul class="repo">
           <li class="repo-download">
             
-            <a href="https://github.com/d0ugal/retrace/archive/master.zip" target="_blank" title="Download" data-action="download">
+            <a href="https://github.com/d0ugal/pynd/archive/master.zip" target="_blank" title="Download" data-action="download">
               <i class="icon icon-download"></i> Download
             </a>
           </li>
           <li class="repo-stars">
-            <a href="https://github.com/d0ugal/retrace/stargazers" target="_blank" title="Stargazers" data-action="star">
+            <a href="https://github.com/d0ugal/pynd/stargazers" target="_blank" title="Stargazers" data-action="star">
               <i class="icon icon-star"></i> Stars
               <span class="count">&ndash;</span>
             </a>
@@ -185,6 +185,12 @@
       
       
         <ul>
+          
+            <li class="anchor">
+              <a title="Installation" href="#installation">
+                Installation
+              </a>
+            </li>
           
             <li class="anchor">
               <a title="What &amp; Why?" href="#what-why">
@@ -235,14 +241,83 @@
       <article class="article">
         <div class="wrapper">
           
-          <h1 id="pynd">Pynd<a class="headerlink" href="#pynd" title="Permanent link">¶</a></h1>
-<p>You say it like find, but with a p.</p>
+          <h1 id="pynd-search-within-python-code">pynd - search within Python code<a class="headerlink" href="#pynd-search-within-python-code" title="Permanent link">¶</a></h1>
+<p>You say it like find, but with a p. pind.</p>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
+<p>We recommend installation with pip.</p>
+<div class="code"><pre><span></span>$ pip install pynd
+$ pynd -h
+</pre></div>
+
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>pynd is in very early stages of development. Almost anything could change
+without warning. You have been warned ;-)</p>
+</div>
 <h2 id="what-why">What &amp; Why?<a class="headerlink" href="#what-why" title="Permanent link">¶</a></h2>
 <p>Pynd is a bit like grep, but it understand Python syntax. This means you can
 do things like search within docstrings only or list and search function names.</p>
-<p>It is a command line utility only.</p>
 <h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">¶</a></h2>
-<p>These will be coming. Soon. You know, when it does something.</p>
+<h3 id="listing-and-searching-within-python">Listing and searching within Python<a class="headerlink" href="#listing-and-searching-within-python" title="Permanent link">¶</a></h3>
+<p>List all the Python classes in every Python file under the current working
+directory.</p>
+<div class="code"><pre><span></span>$ pynd --class
+</pre></div>
+
+
+<p>Find all classes that match a pattern.</p>
+<div class="code"><pre><span></span>$ pynd MyClass --class
+</pre></div>
+
+
+<p>The <code>--class</code> argument can be replaced or used in combination with other node
+types. For example, find all functions or classes that contain the word <code>test</code>.</p>
+<div class="code"><pre><span></span>$ pynd <span class="nb">test</span> --class --def --ignore-case
+</pre></div>
+
+
+<h3 id="docstrings">Docstrings<a class="headerlink" href="#docstrings" title="Permanent link">¶</a></h3>
+<p>Searching within docstrings is simple with pynd. It works in a similar way
+as the other node matches, but it will output the full docstring and the 
+class or function that it is attached to.</p>
+<div class="code"><pre><span></span>$ pynd TODO --doc
+</pre></div>
+
+
+<p>The above search will find all docstrings that contain TODO. If no term is 
+provided, then all docstrings will be output.</p>
+<h3 id="supported-node-types">Supported Node Types<a class="headerlink" href="#supported-node-types" title="Permanent link">¶</a></h3>
+<p>pynd currently supports the following node types.</p>
+<ul>
+<li><code>--class</code> - Matches classes.</li>
+<li><code>--def</code> - All function definitions.</li>
+<li><code>--import</code> - matches import statements</li>
+<li><code>--doc</code> - matches within docstrings</li>
+</ul>
+<h3 id="show-full-usage">Show full usage<a class="headerlink" href="#show-full-usage" title="Permanent link">¶</a></h3>
+<div class="code"><pre><span></span>$ pynd -h
+usage: pynd <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--ignore-dir <span class="o">[</span>IGNORE_DIR <span class="o">[</span>IGNORE_DIR ...<span class="o">]]]</span> <span class="o">[</span>--verbose<span class="o">]</span>
+            <span class="o">[</span>--debug<span class="o">]</span> <span class="o">[</span>--ignore-case<span class="o">]</span> <span class="o">[</span>--files-with-matches<span class="o">]</span> <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-c<span class="o">]</span> <span class="o">[</span>-f<span class="o">]</span>
+            <span class="o">[</span>-i<span class="o">]</span>
+            <span class="o">[</span>PATTERN<span class="o">]</span> <span class="o">[</span>FILES OR DIRECTORIES <span class="o">[</span>FILES OR DIRECTORIES ...<span class="o">]]</span>
+
+positional arguments:
+  PATTERN
+  FILES OR DIRECTORIES
+
+optional arguments:
+  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  --ignore-dir <span class="o">[</span>IGNORE_DIR <span class="o">[</span>IGNORE_DIR ...<span class="o">]]</span>
+  --verbose
+  --debug
+  --ignore-case
+  --files-with-matches
+  -d, --doc
+  -c, --class
+  -f, --def
+  -i, --import
+</pre></div>
           <aside class="copyright" role="note">
             
               <a href="http://www.dougalmatthews.com/">Dougal Matthews</a> &ndash;
@@ -273,7 +348,7 @@ do things like search within docstrings only or list and search function names.<
     </main>
     <script>
       var base_url = '.';
-      var repo_id  = 'd0ugal/retrace';
+      var repo_id  = 'd0ugal/pynd';
     </script>
     <script src="./assets/javascripts/application-997097ee0c.js"></script>
     
