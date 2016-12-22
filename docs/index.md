@@ -31,20 +31,33 @@ List all the Python classes in every Python file under the current working
 directory.
 
 ```
-$ pynd --class
+./pynd/astutils.py
+22:class ASTWalker(object):
+
+./pynd/filters.py
+20:class NodeTypeFilter(object):
+85:class DocString(NodeTypeFilter):
+109:class NameFilter(NodeTypeFilter):
 ```
 
 Find all classes that match a pattern.
 
 ```
-$ pynd MyClass --class
+$ pynd AST --class
+./pynd/astutils.py
+22:class ASTWalker(object):
 ```
 
 The `--class` argument can be replaced or used in combination with other node
 types. For example, find all functions or classes that contain the word `test`.
 
 ```
-$ pynd test --class --def --ignore-case
+$ pynd filter --class --def --ignore-case
+./pynd/filters.py
+20:class NodeTypeFilter(object):
+109:class NameFilter(NodeTypeFilter):
+121:def get_all_filters():
+136:def get_active_filters(args):
 ```
 
 ### Docstrings
@@ -55,10 +68,17 @@ class or function that it is attached to.
 
 ```
 $ pynd TODO --doc
+./pynd/filters.py
+103:    def get_source(self, path, node):
+Get the source line for a particular node.
+
+TODO: Strippng the last line here is a hack - how should we do it
+properly?
+
 ```
 
 The above search will find all docstrings that contain TODO. If no term is 
-provided, then all docstrings will be output.
+provided, then all docstrings will be displayed.
 
 ### Supported Node Types
 

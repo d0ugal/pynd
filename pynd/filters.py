@@ -101,8 +101,11 @@ class DocString(NodeTypeFilter):
         return pattern(docstring)
 
     def get_source(self, path, node):
-        # TODO: Strippng the last line here is a hack - how should we do it
-        # properly?
+        """Get the source line for a particular node.
+
+        TODO: Strippng the last line here is a hack - how should we do it
+        properly?
+        """
         return linecache.getline(path, node.lineno) + self._get_docstring(node)
 
 
@@ -123,13 +126,13 @@ def get_all_filters():
     return (
         # TODO: Add ast.Module to the docstring search.
         DocString('d', 'doc', (ast.FunctionDef, ast.ClassDef, ),
-                  help=("Match class and function docstrings.")),
+                  help="Match class and function docstrings."),
         NameFilter('c', 'class', (ast.ClassDef, ),
-                  help=("Match class names.")),
+                  help="Match class names."),
         NameFilter('f', 'def', (ast.FunctionDef, ),
-                  help=("Match function names.")),
+                  help="Match function names."),
         NameFilter('i', 'import', (ast.Import, ast.ImportFrom, ),
-                  help=("Match imported package names.")),
+                  help="Match imported package names."),
     )
 
 
