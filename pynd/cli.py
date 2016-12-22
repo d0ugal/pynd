@@ -17,20 +17,39 @@ from . import filters
 
 
 def create_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('pattern', metavar="PATTERN", default=".", nargs="?")
+    parser = argparse.ArgumentParser(description=(
+        """Search for PATTERN in each Python file in filesystem from the
+        current directory down. If any files or directories are specified then
+        only those are checked.
+        """
+    ))
+    parser.add_argument('pattern', metavar="PATTERN", default=".", nargs="?",
+                        help=("The pattern to match against. This must be a "
+                              "valid Python regular expression."))
     parser.add_argument('paths', metavar="FILES OR DIRECTORIES",
-                        nargs='*', default=[".", ])
-    parser.add_argument('--ignore-dir', nargs="*", default=[])
-    parser.add_argument('--verbose', action="store_true")
-    parser.add_argument('--debug', action="store_true")
-    parser.add_argument('--ignore-case', action="store_true")
-    parser.add_argument('--files-with-matches', action="store_true")
+                        nargs='*', default=[".", ],
+                        help=("A file or directory to limit the search scope. "
+                              "This can be provided multiple times."))
+    parser.add_argument('--ignore-dir', nargs="*", default=[],
+                        help=("A pattern to exclude directories. This must be "
+                              "a valid Python regular expression. It can be "
+                              "provided multiple times."))
+    parser.add_argument('--verbose', action="store_true",
+                        help="Explain what is happening.")
+    parser.add_argument('--debug', action="store_true",
+                        help="Output excessively to make debugging easier")
+    parser.add_argument('--ignore-case', action="store_true",
+                        help=("Make all the regular expression matching case "
+                              "insesitive."))
+    parser.add_argument('--files-with-matches', action="store_true",
+                        help=("Don't output all the results, just the paths "
+                              "to files that contain a result."))
 
     for f in filters.get_all_filters():
         name = f.arg_name()
         parser.add_argument(
-            f.arg_short(), name, dest=f.arg_dest(), action="store_true")
+            f.arg_short(), name, dest=f.arg_dest(), action="store_true",
+            help=f.help)
 
     return parser
 

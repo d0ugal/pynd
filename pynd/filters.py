@@ -26,12 +26,13 @@ class NodeTypeFilter(object):
     filter the nodes in an AST.
     """
 
-    def __init__(self, short, name, types):
+    def __init__(self, short, name, types, help):
 
         # TODO: I'm not sure that the short name belongs here, since it is only
         #       used for the CLI. Not sure where to move it?
         self.short = short
         self.name = name
+        self.help = help
 
         # TODO: We might want to handle lists or other iterables being passed
         #       in eventually? at the moment this will just wrap the iterable
@@ -120,10 +121,15 @@ class NameFilter(NodeTypeFilter):
 def get_all_filters():
     """Return all the available filters"""
     return (
-        DocString('d', 'doc', (ast.FunctionDef, ast.ClassDef, )),  # TODO: Add ast.Module
-        NameFilter('c', 'class', (ast.ClassDef, )),
-        NameFilter('f', 'def', (ast.FunctionDef, )),
-        NameFilter('i', 'import', (ast.Import, ast.ImportFrom, )),
+        # TODO: Add ast.Module to the docstring search.
+        DocString('d', 'doc', (ast.FunctionDef, ast.ClassDef, ),
+                  help=("Match class and function docstrings.")),
+        NameFilter('c', 'class', (ast.ClassDef, ),
+                  help=("Match class names.")),
+        NameFilter('f', 'def', (ast.FunctionDef, ),
+                  help=("Match function names.")),
+        NameFilter('i', 'import', (ast.Import, ast.ImportFrom, ),
+                  help=("Match imported package names.")),
     )
 
 

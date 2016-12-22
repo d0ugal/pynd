@@ -72,25 +72,35 @@ pynd currently supports the following node types.
 ### Show full usage
 
 ```
-$ pynd -h
 usage: pynd [-h] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]] [--verbose]
             [--debug] [--ignore-case] [--files-with-matches] [-d] [-c] [-f]
             [-i]
             [PATTERN] [FILES OR DIRECTORIES [FILES OR DIRECTORIES ...]]
 
+Search for PATTERN in each Python file in filesystem from the current
+directory down. If any files or directories are specified then only those are
+checked.
+
 positional arguments:
-  PATTERN
-  FILES OR DIRECTORIES
+  PATTERN               The pattern to match against. This must be a valid
+                        Python regular expression.
+  FILES OR DIRECTORIES  A file or directory to limit the search scope. This
+                        can be provided multiple times.
 
 optional arguments:
   -h, --help            show this help message and exit
   --ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]
-  --verbose
-  --debug
-  --ignore-case
-  --files-with-matches
-  -d, --doc
-  -c, --class
-  -f, --def
-  -i, --import
+                        A pattern to exclude directories. This must be a valid
+                        Python regular expression. It can be provided multiple
+                        times.
+  --verbose             Explain what is happening.
+  --debug               Output excessively to make debugging easier
+  --ignore-case         Make all the regular expression matching case
+                        insesitive.
+  --files-with-matches  Don't output all the results, just the paths to files
+                        that contain a result.
+  -d, --doc             Match class and function docstrings.
+  -c, --class           Match class names.
+  -f, --def             Match function names.
+  -i, --import          Match imported package names.
 ```
