@@ -8,9 +8,7 @@ just within docstrings.
 
 |PyPI Version| |Build Status|
 
-See the documentation at:
-
-    http://d0ugal.github.io/pynd/
+See the documentation at: http://d0ugal.github.io/pynd/
 
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/pynd.png
    :target: https://pypi.python.org/pypi/pynd
