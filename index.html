@@ -296,27 +296,37 @@ provided, then all docstrings will be output.</p>
 <li><code>--doc</code> - matches within docstrings</li>
 </ul>
 <h3 id="show-full-usage">Show full usage<a class="headerlink" href="#show-full-usage" title="Permanent link">¶</a></h3>
-<div class="code"><pre><span></span>$ pynd -h
-usage: pynd <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--ignore-dir <span class="o">[</span>IGNORE_DIR <span class="o">[</span>IGNORE_DIR ...<span class="o">]]]</span> <span class="o">[</span>--verbose<span class="o">]</span>
-            <span class="o">[</span>--debug<span class="o">]</span> <span class="o">[</span>--ignore-case<span class="o">]</span> <span class="o">[</span>--files-with-matches<span class="o">]</span> <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-c<span class="o">]</span> <span class="o">[</span>-f<span class="o">]</span>
-            <span class="o">[</span>-i<span class="o">]</span>
-            <span class="o">[</span>PATTERN<span class="o">]</span> <span class="o">[</span>FILES OR DIRECTORIES <span class="o">[</span>FILES OR DIRECTORIES ...<span class="o">]]</span>
+<div class="code"><pre><span></span><span class="n">usage</span><span class="o">:</span> <span class="n">pynd</span> <span class="o">[-</span><span class="n">h</span><span class="o">]</span> <span class="o">[--</span><span class="n">ignore</span><span class="o">-</span><span class="n">dir</span> <span class="o">[</span><span class="n">IGNORE_DIR</span> <span class="o">[</span><span class="n">IGNORE_DIR</span> <span class="o">...]]]</span> <span class="o">[--</span><span class="n">verbose</span><span class="o">]</span>
+            <span class="o">[--</span><span class="n">debug</span><span class="o">]</span> <span class="o">[--</span><span class="n">ignore</span><span class="o">-</span><span class="k">case</span><span class="o">]</span> <span class="o">[--</span><span class="n">files</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">matches</span><span class="o">]</span> <span class="o">[-</span><span class="n">d</span><span class="o">]</span> <span class="o">[-</span><span class="n">c</span><span class="o">]</span> <span class="o">[-</span><span class="n">f</span><span class="o">]</span>
+            <span class="o">[-</span><span class="n">i</span><span class="o">]</span>
+            <span class="o">[</span><span class="n">PATTERN</span><span class="o">]</span> <span class="o">[</span><span class="n">FILES</span> <span class="n">OR</span> <span class="n">DIRECTORIES</span> <span class="o">[</span><span class="n">FILES</span> <span class="n">OR</span> <span class="n">DIRECTORIES</span> <span class="o">...]]</span>
 
-positional arguments:
-  PATTERN
-  FILES OR DIRECTORIES
+<span class="n">Search</span> <span class="k">for</span> <span class="n">PATTERN</span> <span class="k">in</span> <span class="k">each</span> <span class="n">Python</span> <span class="n">file</span> <span class="k">in</span> <span class="n">filesystem</span> <span class="n">from</span> <span class="n">the</span> <span class="n">current</span>
+<span class="n">directory</span> <span class="n">down</span><span class="o">.</span> <span class="n">If</span> <span class="n">any</span> <span class="n">files</span> <span class="n">or</span> <span class="n">directories</span> <span class="n">are</span> <span class="n">specified</span> <span class="n">then</span> <span class="n">only</span> <span class="n">those</span> <span class="n">are</span>
+<span class="n">checked</span><span class="o">.</span>
 
-optional arguments:
-  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
-  --ignore-dir <span class="o">[</span>IGNORE_DIR <span class="o">[</span>IGNORE_DIR ...<span class="o">]]</span>
-  --verbose
-  --debug
-  --ignore-case
-  --files-with-matches
-  -d, --doc
-  -c, --class
-  -f, --def
-  -i, --import
+<span class="n">positional</span> <span class="k">arguments</span><span class="o">:</span>
+  <span class="n">PATTERN</span>               <span class="n">The</span> <span class="n">pattern</span> <span class="n">to</span> <span class="n">match</span> <span class="n">against</span><span class="o">.</span> <span class="n">This</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">valid</span>
+                        <span class="n">Python</span> <span class="n">regular</span> <span class="n">expression</span><span class="o">.</span>
+  <span class="n">FILES</span> <span class="n">OR</span> <span class="n">DIRECTORIES</span>  <span class="n">A</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span> <span class="n">to</span> <span class="n">limit</span> <span class="n">the</span> <span class="n">search</span> <span class="n">scope</span><span class="o">.</span> <span class="n">This</span>
+                        <span class="n">can</span> <span class="n">be</span> <span class="n">provided</span> <span class="n">multiple</span> <span class="n">times</span><span class="o">.</span>
+
+<span class="n">optional</span> <span class="k">arguments</span><span class="o">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="o">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="k">this</span> <span class="n">help</span> <span class="n">message</span> <span class="n">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">ignore</span><span class="o">-</span><span class="n">dir</span> <span class="o">[</span><span class="n">IGNORE_DIR</span> <span class="o">[</span><span class="n">IGNORE_DIR</span> <span class="o">...]]</span>
+                        <span class="n">A</span> <span class="n">pattern</span> <span class="n">to</span> <span class="n">exclude</span> <span class="n">directories</span><span class="o">.</span> <span class="n">This</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">valid</span>
+                        <span class="n">Python</span> <span class="n">regular</span> <span class="n">expression</span><span class="o">.</span> <span class="n">It</span> <span class="n">can</span> <span class="n">be</span> <span class="n">provided</span> <span class="n">multiple</span>
+                        <span class="n">times</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">verbose</span>             <span class="n">Explain</span> <span class="n">what</span> <span class="k">is</span> <span class="n">happening</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">debug</span>               <span class="n">Output</span> <span class="n">excessively</span> <span class="n">to</span> <span class="n">make</span> <span class="n">debugging</span> <span class="n">easier</span>
+  <span class="o">--</span><span class="n">ignore</span><span class="o">-</span><span class="k">case</span>         <span class="n">Make</span> <span class="n">all</span> <span class="n">the</span> <span class="n">regular</span> <span class="n">expression</span> <span class="n">matching</span> <span class="k">case</span>
+                        <span class="n">insesitive</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">files</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">matches</span>  <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">output</span> <span class="n">all</span> <span class="n">the</span> <span class="n">results</span><span class="o">,</span> <span class="n">just</span> <span class="n">the</span> <span class="n">paths</span> <span class="n">to</span> <span class="n">files</span>
+                        <span class="n">that</span> <span class="n">contain</span> <span class="n">a</span> <span class="n">result</span><span class="o">.</span>
+  <span class="o">-</span><span class="n">d</span><span class="o">,</span> <span class="o">--</span><span class="n">doc</span>             <span class="n">Match</span> <span class="kd">class</span> <span class="n">and</span> <span class="kd">function</span> <span class="n">docstrings</span><span class="o">.</span>
+  <span class="o">-</span><span class="n">c</span><span class="o">,</span> <span class="o">--</span><span class="kd">class</span>           <span class="n">Match</span> <span class="kd">class</span> <span class="n">names</span><span class="o">.</span>
+  <span class="o">-</span><span class="n">f</span><span class="o">,</span> <span class="o">--</span><span class="n">def</span>             <span class="n">Match</span> <span class="kd">function</span> <span class="n">names</span><span class="o">.</span>
+  <span class="o">-</span><span class="n">i</span><span class="o">,</span> <span class="o">--</span><span class="k">import</span>          <span class="nn">Match</span> <span class="n">imported</span> <span class="k">package</span> <span class="nn">names.</span>
 </pre></div>
           <aside class="copyright" role="note">
             
