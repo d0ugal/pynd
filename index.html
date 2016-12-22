@@ -262,18 +262,31 @@ do things like search within docstrings only or list and search function names.<
 <h3 id="listing-and-searching-within-python">Listing and searching within Python<a class="headerlink" href="#listing-and-searching-within-python" title="Permanent link">¶</a></h3>
 <p>List all the Python classes in every Python file under the current working
 directory.</p>
-<div class="code"><pre><span></span>$ pynd --class
+<div class="code"><pre><span></span>./pynd/astutils.py
+22:class ASTWalker(object):
+
+./pynd/filters.py
+20:class NodeTypeFilter(object):
+85:class DocString(NodeTypeFilter):
+109:class NameFilter(NodeTypeFilter):
 </pre></div>
 
 
 <p>Find all classes that match a pattern.</p>
-<div class="code"><pre><span></span>$ pynd MyClass --class
+<div class="code"><pre><span></span>$ pynd AST --class
+./pynd/astutils.py
+22:class ASTWalker<span class="o">(</span>object<span class="o">)</span>:
 </pre></div>
 
 
 <p>The <code>--class</code> argument can be replaced or used in combination with other node
 types. For example, find all functions or classes that contain the word <code>test</code>.</p>
-<div class="code"><pre><span></span>$ pynd <span class="nb">test</span> --class --def --ignore-case
+<div class="code"><pre><span></span>$ pynd filter --class --def --ignore-case
+./pynd/filters.py
+20:class NodeTypeFilter<span class="o">(</span>object<span class="o">)</span>:
+109:class NameFilter<span class="o">(</span>NodeTypeFilter<span class="o">)</span>:
+121:def get_all_filters<span class="o">()</span>:
+136:def get_active_filters<span class="o">(</span>args<span class="o">)</span>:
 </pre></div>
 
 
@@ -282,11 +295,17 @@ types. For example, find all functions or classes that contain the word <code>te
 as the other node matches, but it will output the full docstring and the 
 class or function that it is attached to.</p>
 <div class="code"><pre><span></span>$ pynd TODO --doc
+./pynd/filters.py
+103:    def get_source<span class="o">(</span>self, path, node<span class="o">)</span>:
+Get the <span class="nb">source</span> line <span class="k">for</span> a particular node.
+
+TODO: Strippng the last line here is a hack - how should we <span class="k">do</span> it
+properly?
 </pre></div>
 
 
 <p>The above search will find all docstrings that contain TODO. If no term is 
-provided, then all docstrings will be output.</p>
+provided, then all docstrings will be displayed.</p>
 <h3 id="supported-node-types">Supported Node Types<a class="headerlink" href="#supported-node-types" title="Permanent link">¶</a></h3>
 <p>pynd currently supports the following node types.</p>
 <ul>
