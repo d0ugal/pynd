@@ -6,7 +6,7 @@ You say it like find, but with a p. pind.
 
 We recommend installation with pip.
 
-```
+```text
 $ pip install pynd
 $ pynd -h
 ```
@@ -30,7 +30,8 @@ do things like search within docstrings only or list and search function names.
 List all the Python classes in every Python file under the current working
 directory.
 
-```
+```text
+$ pynd --class
 ./pynd/astutils.py
 22:class ASTWalker(object):
 
@@ -42,7 +43,7 @@ directory.
 
 Find all classes that match a pattern.
 
-```
+```text
 $ pynd AST --class
 ./pynd/astutils.py
 22:class ASTWalker(object):
@@ -51,7 +52,7 @@ $ pynd AST --class
 The `--class` argument can be replaced or used in combination with other node
 types. For example, find all functions or classes that contain the word `test`.
 
-```
+```text
 $ pynd filter --class --def --ignore-case
 ./pynd/filters.py
 20:class NodeTypeFilter(object):
@@ -66,7 +67,7 @@ Searching within docstrings is simple with pynd. It works in a similar way
 as the other node matches, but it will output the full docstring and the 
 class or function that it is attached to.
 
-```
+```text
 $ pynd TODO --doc
 ./pynd/filters.py
 103:    def get_source(self, path, node):
@@ -74,7 +75,6 @@ Get the source line for a particular node.
 
 TODO: Strippng the last line here is a hack - how should we do it
 properly?
-
 ```
 
 The above search will find all docstrings that contain TODO. If no term is 
@@ -91,7 +91,8 @@ pynd currently supports the following node types.
 
 ### Show full usage
 
-```
+```text
+$ pynd -h
 usage: pynd [-h] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]] [--verbose]
             [--debug] [--ignore-case] [--files-with-matches] [-d] [-c] [-f]
             [-i]
