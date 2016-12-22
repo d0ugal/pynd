@@ -262,7 +262,8 @@ do things like search within docstrings only or list and search function names.<
 <h3 id="listing-and-searching-within-python">Listing and searching within Python<a class="headerlink" href="#listing-and-searching-within-python" title="Permanent link">¶</a></h3>
 <p>List all the Python classes in every Python file under the current working
 directory.</p>
-<div class="code"><pre><span></span>./pynd/astutils.py
+<div class="code"><pre><span></span>$ pynd --class
+./pynd/astutils.py
 22:class ASTWalker(object):
 
 ./pynd/filters.py
@@ -275,7 +276,7 @@ directory.</p>
 <p>Find all classes that match a pattern.</p>
 <div class="code"><pre><span></span>$ pynd AST --class
 ./pynd/astutils.py
-22:class ASTWalker<span class="o">(</span>object<span class="o">)</span>:
+22:class ASTWalker(object):
 </pre></div>
 
 
@@ -283,10 +284,10 @@ directory.</p>
 types. For example, find all functions or classes that contain the word <code>test</code>.</p>
 <div class="code"><pre><span></span>$ pynd filter --class --def --ignore-case
 ./pynd/filters.py
-20:class NodeTypeFilter<span class="o">(</span>object<span class="o">)</span>:
-109:class NameFilter<span class="o">(</span>NodeTypeFilter<span class="o">)</span>:
-121:def get_all_filters<span class="o">()</span>:
-136:def get_active_filters<span class="o">(</span>args<span class="o">)</span>:
+20:class NodeTypeFilter(object):
+109:class NameFilter(NodeTypeFilter):
+121:def get_all_filters():
+136:def get_active_filters(args):
 </pre></div>
 
 
@@ -296,10 +297,10 @@ as the other node matches, but it will output the full docstring and the
 class or function that it is attached to.</p>
 <div class="code"><pre><span></span>$ pynd TODO --doc
 ./pynd/filters.py
-103:    def get_source<span class="o">(</span>self, path, node<span class="o">)</span>:
-Get the <span class="nb">source</span> line <span class="k">for</span> a particular node.
+103:    def get_source(self, path, node):
+Get the source line for a particular node.
 
-TODO: Strippng the last line here is a hack - how should we <span class="k">do</span> it
+TODO: Strippng the last line here is a hack - how should we do it
 properly?
 </pre></div>
 
@@ -315,37 +316,38 @@ provided, then all docstrings will be displayed.</p>
 <li><code>--doc</code> - matches within docstrings</li>
 </ul>
 <h3 id="show-full-usage">Show full usage<a class="headerlink" href="#show-full-usage" title="Permanent link">¶</a></h3>
-<div class="code"><pre><span></span><span class="n">usage</span><span class="o">:</span> <span class="n">pynd</span> <span class="o">[-</span><span class="n">h</span><span class="o">]</span> <span class="o">[--</span><span class="n">ignore</span><span class="o">-</span><span class="n">dir</span> <span class="o">[</span><span class="n">IGNORE_DIR</span> <span class="o">[</span><span class="n">IGNORE_DIR</span> <span class="o">...]]]</span> <span class="o">[--</span><span class="n">verbose</span><span class="o">]</span>
-            <span class="o">[--</span><span class="n">debug</span><span class="o">]</span> <span class="o">[--</span><span class="n">ignore</span><span class="o">-</span><span class="k">case</span><span class="o">]</span> <span class="o">[--</span><span class="n">files</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">matches</span><span class="o">]</span> <span class="o">[-</span><span class="n">d</span><span class="o">]</span> <span class="o">[-</span><span class="n">c</span><span class="o">]</span> <span class="o">[-</span><span class="n">f</span><span class="o">]</span>
-            <span class="o">[-</span><span class="n">i</span><span class="o">]</span>
-            <span class="o">[</span><span class="n">PATTERN</span><span class="o">]</span> <span class="o">[</span><span class="n">FILES</span> <span class="n">OR</span> <span class="n">DIRECTORIES</span> <span class="o">[</span><span class="n">FILES</span> <span class="n">OR</span> <span class="n">DIRECTORIES</span> <span class="o">...]]</span>
+<div class="code"><pre><span></span>$ pynd -h
+usage: pynd [-h] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]] [--verbose]
+            [--debug] [--ignore-case] [--files-with-matches] [-d] [-c] [-f]
+            [-i]
+            [PATTERN] [FILES OR DIRECTORIES [FILES OR DIRECTORIES ...]]
 
-<span class="n">Search</span> <span class="k">for</span> <span class="n">PATTERN</span> <span class="k">in</span> <span class="k">each</span> <span class="n">Python</span> <span class="n">file</span> <span class="k">in</span> <span class="n">filesystem</span> <span class="n">from</span> <span class="n">the</span> <span class="n">current</span>
-<span class="n">directory</span> <span class="n">down</span><span class="o">.</span> <span class="n">If</span> <span class="n">any</span> <span class="n">files</span> <span class="n">or</span> <span class="n">directories</span> <span class="n">are</span> <span class="n">specified</span> <span class="n">then</span> <span class="n">only</span> <span class="n">those</span> <span class="n">are</span>
-<span class="n">checked</span><span class="o">.</span>
+Search for PATTERN in each Python file in filesystem from the current
+directory down. If any files or directories are specified then only those are
+checked.
 
-<span class="n">positional</span> <span class="k">arguments</span><span class="o">:</span>
-  <span class="n">PATTERN</span>               <span class="n">The</span> <span class="n">pattern</span> <span class="n">to</span> <span class="n">match</span> <span class="n">against</span><span class="o">.</span> <span class="n">This</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">valid</span>
-                        <span class="n">Python</span> <span class="n">regular</span> <span class="n">expression</span><span class="o">.</span>
-  <span class="n">FILES</span> <span class="n">OR</span> <span class="n">DIRECTORIES</span>  <span class="n">A</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span> <span class="n">to</span> <span class="n">limit</span> <span class="n">the</span> <span class="n">search</span> <span class="n">scope</span><span class="o">.</span> <span class="n">This</span>
-                        <span class="n">can</span> <span class="n">be</span> <span class="n">provided</span> <span class="n">multiple</span> <span class="n">times</span><span class="o">.</span>
+positional arguments:
+  PATTERN               The pattern to match against. This must be a valid
+                        Python regular expression.
+  FILES OR DIRECTORIES  A file or directory to limit the search scope. This
+                        can be provided multiple times.
 
-<span class="n">optional</span> <span class="k">arguments</span><span class="o">:</span>
-  <span class="o">-</span><span class="n">h</span><span class="o">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="k">this</span> <span class="n">help</span> <span class="n">message</span> <span class="n">and</span> <span class="n">exit</span>
-  <span class="o">--</span><span class="n">ignore</span><span class="o">-</span><span class="n">dir</span> <span class="o">[</span><span class="n">IGNORE_DIR</span> <span class="o">[</span><span class="n">IGNORE_DIR</span> <span class="o">...]]</span>
-                        <span class="n">A</span> <span class="n">pattern</span> <span class="n">to</span> <span class="n">exclude</span> <span class="n">directories</span><span class="o">.</span> <span class="n">This</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">valid</span>
-                        <span class="n">Python</span> <span class="n">regular</span> <span class="n">expression</span><span class="o">.</span> <span class="n">It</span> <span class="n">can</span> <span class="n">be</span> <span class="n">provided</span> <span class="n">multiple</span>
-                        <span class="n">times</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">verbose</span>             <span class="n">Explain</span> <span class="n">what</span> <span class="k">is</span> <span class="n">happening</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">debug</span>               <span class="n">Output</span> <span class="n">excessively</span> <span class="n">to</span> <span class="n">make</span> <span class="n">debugging</span> <span class="n">easier</span>
-  <span class="o">--</span><span class="n">ignore</span><span class="o">-</span><span class="k">case</span>         <span class="n">Make</span> <span class="n">all</span> <span class="n">the</span> <span class="n">regular</span> <span class="n">expression</span> <span class="n">matching</span> <span class="k">case</span>
-                        <span class="n">insesitive</span><span class="o">.</span>
-  <span class="o">--</span><span class="n">files</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">matches</span>  <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">output</span> <span class="n">all</span> <span class="n">the</span> <span class="n">results</span><span class="o">,</span> <span class="n">just</span> <span class="n">the</span> <span class="n">paths</span> <span class="n">to</span> <span class="n">files</span>
-                        <span class="n">that</span> <span class="n">contain</span> <span class="n">a</span> <span class="n">result</span><span class="o">.</span>
-  <span class="o">-</span><span class="n">d</span><span class="o">,</span> <span class="o">--</span><span class="n">doc</span>             <span class="n">Match</span> <span class="kd">class</span> <span class="n">and</span> <span class="kd">function</span> <span class="n">docstrings</span><span class="o">.</span>
-  <span class="o">-</span><span class="n">c</span><span class="o">,</span> <span class="o">--</span><span class="kd">class</span>           <span class="n">Match</span> <span class="kd">class</span> <span class="n">names</span><span class="o">.</span>
-  <span class="o">-</span><span class="n">f</span><span class="o">,</span> <span class="o">--</span><span class="n">def</span>             <span class="n">Match</span> <span class="kd">function</span> <span class="n">names</span><span class="o">.</span>
-  <span class="o">-</span><span class="n">i</span><span class="o">,</span> <span class="o">--</span><span class="k">import</span>          <span class="nn">Match</span> <span class="n">imported</span> <span class="k">package</span> <span class="nn">names.</span>
+optional arguments:
+  -h, --help            show this help message and exit
+  --ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]
+                        A pattern to exclude directories. This must be a valid
+                        Python regular expression. It can be provided multiple
+                        times.
+  --verbose             Explain what is happening.
+  --debug               Output excessively to make debugging easier
+  --ignore-case         Make all the regular expression matching case
+                        insesitive.
+  --files-with-matches  Don&#39;t output all the results, just the paths to files
+                        that contain a result.
+  -d, --doc             Match class and function docstrings.
+  -c, --class           Match class names.
+  -f, --def             Match function names.
+  -i, --import          Match imported package names.
 </pre></div>
           <aside class="copyright" role="note">
             
