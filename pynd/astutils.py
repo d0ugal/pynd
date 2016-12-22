@@ -1,15 +1,26 @@
+#  Licensed under the Apache License, Version 2.0 (the "License"); you may
+#  not use this file except in compliance with the License. You may obtain
+#  a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#  License for the specific language governing permissions and limitations
+#  under the License.
+
 import ast
 import io
+import logging
 import os
 import os.path
-import logging
 
 LOG = logging.getLogger(__name__)
 
 
 class ASTWalker(object):
-    """
-    Abstract Syntax Tree Walker
+    """Abstract Syntax Tree Walker
 
     Given a set of paths on the file system create an interator that returns
     a tuple for each Python file containing the file path and an iterator
@@ -31,14 +42,16 @@ class ASTWalker(object):
         return False
 
     def _walk_files(self, path):
-        """
-        Walk through all the files and directories in alphabetical order for
-        the given path and yield all paths to the Python files.
+        """Walk paths and yield Python paths
+
+        Directories and files are yielded in alphabetical order. Directories
+        starting with a "." are skipped. As are those that match any provided
+        ignore patterns.
         """
         for root, dirs, filenames in os.walk(path):
             # Remove dot-directories from the dirs list.
-            dirs[:] = sorted(d for d in dirs if not d.startswith('.')
-                             and not self._is_ignored(d))
+            dirs[:] = sorted(d for d in dirs if not d.startswith('.') and
+                             not self._is_ignored(d))
             for filename in sorted(filenames):
                 if self._is_python(filename):
                     yield os.path.join(root, filename)

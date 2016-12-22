@@ -1,9 +1,10 @@
+Pygments
 coverage
 flake8
+hacking
 mkdocs
 mkdocs-material
 mock
 pbr
-Pygments
 pytest
 pytest-cov

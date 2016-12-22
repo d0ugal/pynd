@@ -1,3 +1,15 @@
+#  Licensed under the Apache License, Version 2.0 (the "License"); you may
+#  not use this file except in compliance with the License. You may obtain
+#  a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#  License for the specific language governing permissions and limitations
+#  under the License.
+
 import ast
 import linecache
 import logging
@@ -6,8 +18,7 @@ LOG = logging.getLogger(__name__)
 
 
 class NodeTypeFilter(object):
-    """
-    AST Node Filter
+    """AST Node Filter
 
     Match specific types of AST nodes.
 
@@ -39,16 +50,14 @@ class NodeTypeFilter(object):
         return "--{}".format(self.name)
 
     def arg_dest(self):
-        """
-        Where to store the args.
+        """Where to store the args.
 
         This is done to avoid name conflicts with python keywords.
         """
         return "{}_".format(self.name)
 
     def is_activated(self, args):
-        """
-        Is the filter in use?
+        """Is the filter in use?
 
         If a user provides `--class Foo` then the value will be "Foo" and it is
         in use, or if the user provides `--class` then the value will be True
