@@ -48,6 +48,13 @@ class ASTWalker(object):
         starting with a "." are skipped. As are those that match any provided
         ignore patterns.
         """
+
+        if os.path.isfile(path):
+            yield path
+        elif not os.path.isdir(path):
+            LOG.error("The path '%s' can't be found.", path)
+            raise StopIteration
+
         for root, dirs, filenames in os.walk(path):
             # Remove dot-directories from the dirs list.
             dirs[:] = sorted(d for d in dirs if not d.startswith('.') and
@@ -70,7 +77,7 @@ class ASTWalker(object):
                     source = self._read(file_path)
                     yield file_path, ast.walk(ast.parse(source))
                 except SyntaxError:
-                    LOG.exception("Failed to parse {}. Could it be a "
-                                  "incompatible Python version?")
+                    LOG.exception("Failed to parse %s. Could it be a "
+                                  "incompatible Python version?", file_path)
                 except UnicodeDecodeError:
-                    LOG.exception("Failed to decode {}.")
+                    LOG.exception("Failed to decode %s.")
