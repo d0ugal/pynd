@@ -13,6 +13,7 @@
 from __future__ import print_function
 
 import logging
+import time
 
 from . import astutils
 from . import filters
@@ -42,6 +43,8 @@ def print_file_path(file_path, first):
 
 def search(args):
 
+    start = time.time()
+
     ignore_dirs = [pattern.compile(i_d) for i_d in args.ignore_dir]
     ast_walker = astutils.ASTWalker(args.paths, ignore_dirs)
     files_with_matches = set()
@@ -53,8 +56,10 @@ def search(args):
 
     pat = pattern.matcher(args)
 
-    for i, (file_path, nodes) in enumerate(ast_walker.walk()):
-        for node in nodes:
+    node_count = 0
+
+    for file_count, (file_path, nodes) in enumerate(ast_walker.walk()):
+        for file_node_count, node in enumerate(nodes):
             for f in activated_filters:
                 if f.match(node, pat):
                     if file_path not in files_with_matches:
@@ -67,3 +72,15 @@ def search(args):
 
                     if not args.files_with_matches:
                         display_result(f, file_path, node)
+        node_count += file_node_count
+
+    if args.show_stats:
+        seconds = round(time.time() - start, 2)
+        print("**STATS**")
+        print("Ran for {} seconds".format(seconds))
+        print("Parsed {} Python files ({}/s)".format(
+              file_count, round(file_count / seconds, 2)))
+        print("Visited {} AST nodes ({}/s)".format(
+              node_count, round(node_count / seconds, 2)))
+        print("Ran {} regular expression matches ({}/s)".format(
+              pat.count, round(pat.count / seconds, 2)))

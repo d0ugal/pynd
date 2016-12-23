@@ -44,6 +44,8 @@ def create_parser():
     parser.add_argument('--files-with-matches', action="store_true",
                         help=("Don't output all the results, just the paths "
                               "to files that contain a result."))
+    parser.add_argument('--show-stats', action="store_true",
+                        help=("At the end, show some stats."))
 
     for f in filters.get_all_filters():
         name = f.arg_name()
