@@ -150,6 +150,27 @@ class CallFilter(NodeTypeFilter):
         return False
 
 
+class AttrFilter(NodeTypeFilter):
+    def cmp(self, node, pattern):
+        return pattern(node.attr)
+
+
+class ImportFilter(NodeTypeFilter):
+    def cmp(self, node, pattern):
+
+        for name in node.names:
+            if pattern(name.name):
+                return True
+
+        if isinstance(node, ast.ImportFrom):
+            if node.module and pattern(node.module):
+                return True
+        elif not isinstance(node, ast.Import):
+            LOG.warning("Unknown import node")
+
+        return False
+
+
 def get_all_filters():
     """Return all the available filters"""
     return (
@@ -160,10 +181,12 @@ def get_all_filters():
                   help="Match class names."),
         NameFilter('f', 'def', (ast.FunctionDef, ),
                   help="Match function names."),
-        NameFilter('i', 'import', (ast.Import, ast.ImportFrom, ),
-                  help="Match imported package names."),
+        ImportFilter('i', 'import', (ast.Import, ast.ImportFrom, ),
+                     help="Match imported package names."),
         CallFilter('C', 'call', (ast.Call, ),
                   help="Match call statements."),
+        AttrFilter('a', 'attr', (ast.Attribute, ),
+                  help="Match attributes on objects"),
     )
 
 
