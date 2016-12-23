@@ -30,6 +30,28 @@ do things like search within docstrings only or list and search function names.
 
 ## Usage Examples
 
+### Search everything
+
+By default, pynd will accept a pattern and use that to check against all the
+AST nodes that it understands. This means, you can easily search across 
+functions, class, docstrings and calls.
+
+```
+$ pynd call --ignore-case
+./pynd/filters.py
+124:class CallFilter(NodeTypeFilter):
+165:        CallFilter('C', 'call', (ast.Call, ),
+
+./pynd/pattern.py
+27:    def __call__(self, value):
+
+./pynd/_tests/test_main.py
+22:    mocked_search.assert_called_once_with(cli.parse_args(['.']))
+```
+
+In the above example we search for the pattern "call" everywhere in a 
+case-insensitive search.
+
 ### Listing and searching within Python
 
 List all the Python classes in every Python file under the current working
@@ -66,6 +88,29 @@ $ pynd filter --class --def --ignore-case
 136:def get_active_filters(args):
 ```
 
+### Finding the definition and usage
+
+Finding where a function is defined can be useful, but we also want to know
+where it is used.
+
+```text
+$ pynd get_all_filters --def --call
+./pynd/cli.py
+50:    for f in filters.get_all_filters():
+
+./pynd/filters.py
+153:def get_all_filters():
+172:    return [f for f in get_all_filters() if f.is_activated(args)]
+
+./pynd/search.py
+55:        activated_filters = filters.get_all_filters()
+
+```
+
+Note, this uses a simple name match - so if you have multiple functions with
+the same name, it will find them all.
+
+
 ### Docstrings
 
 Searching within docstrings is simple with pynd. It works in a similar way
@@ -93,14 +138,14 @@ pynd currently supports the following node types.
 * `--def` - All function definitions.
 * `--import` - matches import statements
 * `--doc` - matches within docstrings
+* `--doc` - matches calls to functions or new classes
 
 ### Show full usage
 
 ```text
-$ pynd -h
 usage: pynd [-h] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]] [--verbose]
-            [--debug] [--ignore-case] [--files-with-matches] [-d] [-c] [-f]
-            [-i]
+            [--debug] [--ignore-case] [--files-with-matches] [--show-stats]
+            [-d] [-c] [-f] [-i] [-C]
             [PATTERN] [FILES OR DIRECTORIES [FILES OR DIRECTORIES ...]]
 
 Search for PATTERN in each Python file in filesystem from the current
@@ -125,8 +170,10 @@ optional arguments:
                         insesitive.
   --files-with-matches  Don't output all the results, just the paths to files
                         that contain a result.
+  --show-stats          At the end, show some stats.
   -d, --doc             Match class and function docstrings.
   -c, --class           Match class names.
   -f, --def             Match function names.
   -i, --import          Match imported package names.
+  -C, --call            Match call statements.
 ```
