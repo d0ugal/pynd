@@ -97,7 +97,7 @@ class DocString(NodeTypeFilter):
         docstring = ast.get_docstring(node)
         if docstring is None:
             return False
-        LOG.debug("Comparing %r and %r", docstring, pattern)
+        LOG.debug("Comparing %r and %r", docstring, pattern.pattern)
         return pattern(docstring)
 
     def get_source(self, path, node):
@@ -121,6 +121,35 @@ class NameFilter(NodeTypeFilter):
         return False
 
 
+class CallFilter(NodeTypeFilter):
+
+    def cmp(self, node, pattern):
+        # TODO: The logic in here is nasty. Is there a better way we can more
+        # genertically match rather than handling specific cases?
+
+        if isinstance(node.func, ast.Name):
+            # This seems to be when we create instances of classes that are
+            # in the local file.
+            return pattern(node.func.id)
+
+        if hasattr(node.func, 'attr') and pattern(node.func.attr):
+            return True
+
+        if (hasattr(node.func, 'value') and hasattr(node.func.value, 's') and
+           pattern(node.func.value.s)):
+            # This seems to be when we are calling methods on strings - not
+            # sure if it could be anything else.
+            return True
+
+        # TODO: Support callables in more situations. For example, chained
+        # calls mean node.func.func is a thing.
+
+        LOG.debug("Failed to recognise call structure to test the pattern. "
+                  "Node %s on line %s", node, node.lineno)
+
+        return False
+
+
 def get_all_filters():
     """Return all the available filters"""
     return (
@@ -133,6 +162,8 @@ def get_all_filters():
                   help="Match function names."),
         NameFilter('i', 'import', (ast.Import, ast.ImportFrom, ),
                   help="Match imported package names."),
+        CallFilter('C', 'call', (ast.Call, ),
+                  help="Match call statements."),
     )
 
 

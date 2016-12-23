@@ -16,10 +16,26 @@ import re
 LOG = logging.getLogger()
 
 
+class Compare(object):
+
+    def __init__(self, pattern, flags):
+        self.pat = re.compile(pattern, flags=flags)
+        LOG.debug("Regular expression %r", self.pat)
+        self.pattern = pattern
+        self.count = 0
+
+    def __call__(self, value):
+        try:
+            self.count += 1
+            return self.pat.search(value)
+        except Exception:
+            LOG.exception("Failed to match the pattern %r to the value %r",
+                          self.pattern, value)
+            return False
+
+
 def compile(pattern, flags=0):
-    pat = re.compile(pattern, flags=flags)
-    LOG.debug("Regular expression %r", pat)
-    return pat.search
+    return Compare(pattern, flags)
 
 
 def matcher(args):
