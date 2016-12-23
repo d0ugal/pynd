@@ -36,7 +36,7 @@ By default, pynd will accept a pattern and use that to check against all the
 AST nodes that it understands. This means, you can easily search across 
 functions, class, docstrings and calls.
 
-```
+```text
 $ pynd call --ignore-case
 ./pynd/filters.py
 124:class CallFilter(NodeTypeFilter):
