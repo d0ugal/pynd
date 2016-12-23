@@ -263,6 +263,25 @@ Windows support are done on a "best effort" basis.</p>
 <p>Pynd is a bit like grep, but it understand Python syntax. This means you can
 do things like search within docstrings only or list and search function names.</p>
 <h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">¶</a></h2>
+<h3 id="search-everything">Search everything<a class="headerlink" href="#search-everything" title="Permanent link">¶</a></h3>
+<p>By default, pynd will accept a pattern and use that to check against all the
+AST nodes that it understands. This means, you can easily search across 
+functions, class, docstrings and calls.</p>
+<div class="code"><pre><span></span>$ pynd call --ignore-case
+./pynd/filters.py
+124:class CallFilter<span class="o">(</span>NodeTypeFilter<span class="o">)</span>:
+165:        CallFilter<span class="o">(</span><span class="s1">&#39;C&#39;</span>, <span class="s1">&#39;call&#39;</span>, <span class="o">(</span>ast.Call, <span class="o">)</span>,
+
+./pynd/pattern.py
+27:    def __call__<span class="o">(</span>self, value<span class="o">)</span>:
+
+./pynd/_tests/test_main.py
+22:    mocked_search.assert_called_once_with<span class="o">(</span>cli.parse_args<span class="o">([</span><span class="s1">&#39;.&#39;</span><span class="o">]))</span>
+</pre></div>
+
+
+<p>In the above example we search for the pattern "call" everywhere in a 
+case-insensitive search.</p>
 <h3 id="listing-and-searching-within-python">Listing and searching within Python<a class="headerlink" href="#listing-and-searching-within-python" title="Permanent link">¶</a></h3>
 <p>List all the Python classes in every Python file under the current working
 directory.</p>
@@ -295,6 +314,24 @@ types. For example, find all functions or classes that contain the word <code>te
 </pre></div>
 
 
+<h3 id="finding-the-definition-and-usage">Finding the definition and usage<a class="headerlink" href="#finding-the-definition-and-usage" title="Permanent link">¶</a></h3>
+<p>Finding where a function is defined can be useful, but we also want to know
+where it is used.</p>
+<div class="code"><pre><span></span>$ pynd get_all_filters --def --call
+./pynd/cli.py
+50:    for f in filters.get_all_filters():
+
+./pynd/filters.py
+153:def get_all_filters():
+172:    return [f for f in get_all_filters() if f.is_activated(args)]
+
+./pynd/search.py
+55:        activated_filters = filters.get_all_filters()
+</pre></div>
+
+
+<p>Note, this uses a simple name match - so if you have multiple functions with
+the same name, it will find them all.</p>
 <h3 id="docstrings">Docstrings<a class="headerlink" href="#docstrings" title="Permanent link">¶</a></h3>
 <p>Searching within docstrings is simple with pynd. It works in a similar way
 as the other node matches, but it will output the full docstring and the 
@@ -318,12 +355,12 @@ provided, then all docstrings will be displayed.</p>
 <li><code>--def</code> - All function definitions.</li>
 <li><code>--import</code> - matches import statements</li>
 <li><code>--doc</code> - matches within docstrings</li>
+<li><code>--doc</code> - matches calls to functions or new classes</li>
 </ul>
 <h3 id="show-full-usage">Show full usage<a class="headerlink" href="#show-full-usage" title="Permanent link">¶</a></h3>
-<div class="code"><pre><span></span>$ pynd -h
-usage: pynd [-h] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]] [--verbose]
-            [--debug] [--ignore-case] [--files-with-matches] [-d] [-c] [-f]
-            [-i]
+<div class="code"><pre><span></span>usage: pynd [-h] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]] [--verbose]
+            [--debug] [--ignore-case] [--files-with-matches] [--show-stats]
+            [-d] [-c] [-f] [-i] [-C]
             [PATTERN] [FILES OR DIRECTORIES [FILES OR DIRECTORIES ...]]
 
 Search for PATTERN in each Python file in filesystem from the current
@@ -348,10 +385,12 @@ optional arguments:
                         insesitive.
   --files-with-matches  Don&#39;t output all the results, just the paths to files
                         that contain a result.
+  --show-stats          At the end, show some stats.
   -d, --doc             Match class and function docstrings.
   -c, --class           Match class names.
   -f, --def             Match function names.
   -i, --import          Match imported package names.
+  -C, --call            Match call statements.
 </pre></div>
           <aside class="copyright" role="note">
             
