@@ -269,14 +269,14 @@ AST nodes that it understands. This means, you can easily search across
 functions, class, docstrings and calls.</p>
 <div class="code"><pre><span></span>$ pynd call --ignore-case
 ./pynd/filters.py
-124:class CallFilter<span class="o">(</span>NodeTypeFilter<span class="o">)</span>:
-165:        CallFilter<span class="o">(</span><span class="s1">&#39;C&#39;</span>, <span class="s1">&#39;call&#39;</span>, <span class="o">(</span>ast.Call, <span class="o">)</span>,
+124:class CallFilter(NodeTypeFilter):
+165:        CallFilter(&#39;C&#39;, &#39;call&#39;, (ast.Call, ),
 
 ./pynd/pattern.py
-27:    def __call__<span class="o">(</span>self, value<span class="o">)</span>:
+27:    def __call__(self, value):
 
 ./pynd/_tests/test_main.py
-22:    mocked_search.assert_called_once_with<span class="o">(</span>cli.parse_args<span class="o">([</span><span class="s1">&#39;.&#39;</span><span class="o">]))</span>
+22:    mocked_search.assert_called_once_with(cli.parse_args([&#39;.&#39;]))
 </pre></div>
 
 
