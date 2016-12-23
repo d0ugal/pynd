@@ -34,10 +34,6 @@ def create_parser():
                         help=("A pattern to exclude directories. This must be "
                               "a valid Python regular expression. It can be "
                               "provided multiple times."))
-    parser.add_argument('--verbose', action="store_true",
-                        help="Explain what is happening.")
-    parser.add_argument('--debug', action="store_true",
-                        help="Output excessively to make debugging easier")
     parser.add_argument('--ignore-case', action="store_true",
                         help=("Make all the regular expression matching case "
                               "insesitive."))
@@ -46,6 +42,12 @@ def create_parser():
                               "to files that contain a result."))
     parser.add_argument('--show-stats', action="store_true",
                         help=("At the end, show some stats."))
+
+    log_mutex = parser.add_mutually_exclusive_group()
+    log_mutex.add_argument('--verbose', action="store_true",
+                           help="Explain what is happening.")
+    log_mutex.add_argument('--debug', action="store_true",
+                           help="Output excessively to make debugging easier")
 
     for f in filters.get_all_filters():
         name = f.arg_name()

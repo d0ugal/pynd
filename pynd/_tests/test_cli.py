@@ -10,6 +10,8 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
+import pytest
+
 import logging
 
 from .. import cli
@@ -53,3 +55,8 @@ def test_logger_debug():
     assert log.level == logging.DEBUG
     assert not args.verbose
     assert args.debug
+
+
+def test_debug_and_verbose():
+    with pytest.raises(SystemExit):
+        cli.parse_args([".", "--debug", "--verbose"])
