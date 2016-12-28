@@ -1,6 +1,16 @@
 # pynd - search within Python code
 
-You say it like find, but with a p. pind.
+You say it like *__find__*, but with a *__p__*. **pind**.
+
+pynd helps you navigate and find what you are looking for in Python codebases.
+
+[![PyPI Version][pypi-v-image]][pypi-v-link]
+[![Build Status][travis-image]][travis-link]
+
+[pypi-v-image]: https://img.shields.io/pypi/v/pynd.png
+[pypi-v-link]: https://pypi.python.org/pypi/pynd
+[travis-image]: https://img.shields.io/travis/d0ugal/pynd/master.png
+[travis-link]: https://travis-ci.org/d0ugal/pynd
 
 ## Installation
 
