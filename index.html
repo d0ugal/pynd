@@ -260,7 +260,16 @@
         <div class="wrapper">
           
           <h1 id="pynd-search-within-python-code">pynd - search within Python code<a class="headerlink" href="#pynd-search-within-python-code" title="Permanent link">¶</a></h1>
-<p>You say it like find, but with a p. pind.</p>
+<p><a href="https://pypi.python.org/pypi/pynd"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/pynd.png" /></a>
+<a href="https://travis-ci.org/d0ugal/pynd"><img alt="Build Status" src="https://img.shields.io/travis/d0ugal/pynd/master.png" /></a></p>
+<p>You say it like <em><strong>find</strong></em>, but with a <em><strong>p</strong></em>. <strong>pind</strong>.</p>
+<p>pynd helps you navigate and find what you are looking for in Python codebases.</p>
+<ul>
+<li>Find and list all public functions with <code>pynd --def --public</code></li>
+<li>Look for each time a class instance was created <code>pynd ClassName --call</code></li>
+<li>Search only within docstrings <code>pynd "search term" --doc</code></li>
+</ul>
+<p>See further examples and the output further down...</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
 <p>We recommend installation with pip.</p>
 <div class="code"><pre><span></span>$ pip install pynd
@@ -495,6 +504,38 @@ optional arguments:
     </script>
     <script src="./assets/javascripts/application-997097ee0c.js"></script>
     
+    
+      <script>
+        (function(i,s,o,g,r,a,m){
+          i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||
+          []).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
+          m.parentNode.insertBefore(a,m)
+        })(window, document,
+          'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        /* General initialization */
+        ga('create', 'UA-89549313-1', 'auto');
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+        /* Track outbound links */
+        var buttons = document.querySelectorAll('a');
+        Array.prototype.map.call(buttons, function(item) {
+          if (item.host != document.location.host) {
+            item.addEventListener('click', function() {
+              var action = item.getAttribute('data-action') || 'follow';
+              ga('send', 'event', 'outbound', action, item.href);
+            });
+          }
+        });
+        /* Register handler to log search on blur */
+        var query = document.querySelector('.query');
+        query.addEventListener('blur', function() {
+          if (this.value) {
+            var path = document.location.pathname;
+            ga('send', 'pageview', path + '?q=' + this.value);
+          }
+        });
+      </script>
     
   </body>
 </html>
