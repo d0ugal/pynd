@@ -12,8 +12,8 @@
 
 import mock
 
-from .. import cli
-from .. import search
+from pynd import cli
+from pynd import search
 
 
 def test_search(tmpdir):

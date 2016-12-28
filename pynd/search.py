@@ -15,9 +15,9 @@ from __future__ import print_function
 import logging
 import time
 
-from . import astutils
-from . import filters
-from . import pattern
+from pynd import astutils
+from pynd import filters
+from pynd import pattern
 
 CLEAR = "\x1b[0m"
 GREEN = "\x1b[1;32m"

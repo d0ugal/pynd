@@ -10,7 +10,7 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-from .. import astutils
+from pynd import astutils
 
 
 def test_is_python():

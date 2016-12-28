@@ -13,8 +13,8 @@
 import logging
 import sys
 
-from . import cli
-from . import search
+from pynd import cli
+from pynd import search
 
 
 def main(sysargs=None):

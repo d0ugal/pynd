@@ -14,7 +14,7 @@ import pytest
 
 import logging
 
-from .. import cli
+from pynd import cli
 
 
 def test_parse_args_empty():

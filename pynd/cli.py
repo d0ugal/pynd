@@ -13,8 +13,9 @@
 import argparse
 import logging
 
-from pynd import filters
 import pynd
+from pynd import filters
+
 
 def create_parser():
     parser = argparse.ArgumentParser(description=(

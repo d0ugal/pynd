@@ -12,8 +12,8 @@
 
 import mock
 
-from .. import __main__
-from .. import cli
+from pynd import __main__
+from pynd import cli
 
 
 def test_main():
