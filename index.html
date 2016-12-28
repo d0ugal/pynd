@@ -348,19 +348,39 @@ properly?
 
 <p>The above search will find all docstrings that contain TODO. If no term is 
 provided, then all docstrings will be displayed.</p>
+<h3 id="public-private">Public &amp; Private<a class="headerlink" href="#public-private" title="Permanent link">¶</a></h3>
+<p>The flags <code>--private</code> and <code>--public</code> can be used to filter by the common Python
+convention of a leading underscore to mark someting as private. This means
+that <code>--private</code> will only match results starting with a underscore and 
+<code>--public</code> will only match results starting without. These can be used in 
+combination with other searched but can't both be used together.</p>
+<div class="code"><pre><span></span>pynd --private --def
+./pynd/astutils.py
+34:    def _is_python(self, path):
+38:    def _is_ignored(self, directory):
+44:    def _walk_files(self, path):
+66:    def _read(self, file_path):
+
+./pynd/filters.py
+101:    def _get_docstring(self, node):
+</pre></div>
+
+
 <h3 id="supported-node-types">Supported Node Types<a class="headerlink" href="#supported-node-types" title="Permanent link">¶</a></h3>
 <p>pynd currently supports the following node types.</p>
 <ul>
+<li><code>--doc</code> - matches within docstrings</li>
 <li><code>--class</code> - Matches classes.</li>
 <li><code>--def</code> - All function definitions.</li>
-<li><code>--import</code> - matches import statements</li>
-<li><code>--doc</code> - matches within docstrings</li>
-<li><code>--doc</code> - matches calls to functions or new classes</li>
+<li><code>--import</code> - Matches import statements</li>
+<li><code>--call</code> - Matches calls to functions or new classes</li>
+<li><code>--attr</code> - Matches attributes on objects</li>
 </ul>
 <h3 id="show-full-usage">Show full usage<a class="headerlink" href="#show-full-usage" title="Permanent link">¶</a></h3>
-<div class="code"><pre><span></span>usage: pynd [-h] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]] [--verbose]
-            [--debug] [--ignore-case] [--files-with-matches] [--show-stats]
-            [-d] [-c] [-f] [-i] [-C]
+<div class="code"><pre><span></span>usage: pynd [-h] [--version] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]]
+            [--ignore-case] [--files-with-matches] [--show-stats]
+            [--public | --private] [--verbose | --debug] [-d] [-c] [-f] [-i]
+            [-C] [-a]
             [PATTERN] [FILES OR DIRECTORIES [FILES OR DIRECTORIES ...]]
 
 Search for PATTERN in each Python file in filesystem from the current
@@ -375,22 +395,28 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  --version             show program&#39;s version number and exit
   --ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]
                         A pattern to exclude directories. This must be a valid
                         Python regular expression. It can be provided multiple
                         times.
-  --verbose             Explain what is happening.
-  --debug               Output excessively to make debugging easier
   --ignore-case         Make all the regular expression matching case
                         insesitive.
   --files-with-matches  Don&#39;t output all the results, just the paths to files
                         that contain a result.
   --show-stats          At the end, show some stats.
+  --public              Only show results considered to be public in Python.
+                        They don&#39;t start with an underscore.
+  --private             Only show results considered to be private in Python.
+                        They start with an underscore.
+  --verbose             Explain what is happening.
+  --debug               Output excessively to make debugging easier
   -d, --doc             Match class and function docstrings.
   -c, --class           Match class names.
   -f, --def             Match function names.
   -i, --import          Match imported package names.
   -C, --call            Match call statements.
+  -a, --attr            Match attributes on objects
 </pre></div>
           <aside class="copyright" role="note">
             
