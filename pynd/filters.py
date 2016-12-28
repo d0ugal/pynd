@@ -66,12 +66,23 @@ class NodeTypeFilter(object):
         """
         return getattr(args, self.arg_dest())
 
-    def match(self, node, pattern):
-        for type_ in self.types:
-            if type_ != type(node):
-                continue
-            return self.cmp(node, pattern)
-        return False
+    def match(self, node, patterns):
+
+        if type(node) not in self.types:
+            return
+
+        result = False
+
+        for pattern in patterns:
+            LOG.debug("Testing pattern %r", pattern)
+            result = self.cmp(node, pattern)
+            # We want to make sure each pattern is True, but exit early if one
+            # is False to be more efficient.
+            if not result:
+                LOG.debug("Failed to match pattern %r", pattern)
+                break
+
+        return result
 
     def get_source(self, path, node):
         # TODO: Strippng the last line here is a hack - how should we do it

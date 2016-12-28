@@ -54,14 +54,14 @@ def search(args):
         LOG.info("No filters were provided. Using all filters")
         activated_filters = filters.get_all_filters()
 
-    pat = pattern.matcher(args)
+    patterns = pattern.matchers(args)
 
     node_count = 0
 
     for file_count, (file_path, nodes) in enumerate(ast_walker.walk()):
         for file_node_count, node in enumerate(nodes):
             for f in activated_filters:
-                if f.match(node, pat):
+                if f.match(node, patterns):
                     if file_path not in files_with_matches:
                         files_with_matches.add(file_path)
                         if args.files_with_matches:
@@ -75,12 +75,13 @@ def search(args):
         node_count += file_node_count
 
     if args.show_stats:
-        seconds = round(time.time() - start, 2)
+        seconds = round(time.time() - start, 3)
         print("**STATS**")
         print("Ran for {} seconds".format(seconds))
         print("Parsed {} Python files ({}/s)".format(
               file_count, round(file_count / seconds, 2)))
         print("Visited {} AST nodes ({}/s)".format(
               node_count, round(node_count / seconds, 2)))
-        print("Ran {} regular expression matches ({}/s)".format(
-              pat.count, round(pat.count / seconds, 2)))
+        for pat in patterns:
+            print("Ran regular expression '{}' {} times.".format(
+                  pat.pat, pat.count))

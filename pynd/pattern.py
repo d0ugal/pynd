@@ -33,14 +33,28 @@ class Compare(object):
                           self.pattern, value)
             return False
 
+    def __repr__(self):
+        return repr(self.pat)
+
 
 def compile(pattern, flags=0):
     return Compare(pattern, flags)
 
 
-def matcher(args):
+def matchers(args):
+
+    patterns = []
+
+    if args.private:
+        patterns.append(compile(args.private))
+
+    if args.public:
+        patterns.append(compile(args.public))
+
     flags = 0
     if args.ignore_case:
         LOG.debug("Lowercase flag added to regular expression")
         flags = re.IGNORECASE
-    return compile(args.pattern, flags)
+    patterns.append(compile(args.pattern, flags))
+
+    return patterns

@@ -46,6 +46,16 @@ def create_parser():
     parser.add_argument('--show-stats', action="store_true",
                         help=("At the end, show some stats."))
 
+    pub_mutex = parser.add_mutually_exclusive_group()
+    pub_mutex.add_argument('--public', action="store_const",
+                           const="^(?!_.*$).*$",
+                           help=("Only show results considered to be public "
+                                 "in Python. They don't start with an "
+                                 "underscore."))
+    pub_mutex.add_argument('--private', action="store_const", const="^\_.*",
+                           help=("Only show results considered to be private "
+                                 "in Python. They start with an underscore."))
+
     log_mutex = parser.add_mutually_exclusive_group()
     log_mutex.add_argument('--verbose', action="store_true",
                            help="Explain what is happening.")
