@@ -1,9 +1,5 @@
 # pynd - search within Python code
 
-You say it like *__find__*, but with a *__p__*. **pind**.
-
-pynd helps you navigate and find what you are looking for in Python codebases.
-
 [![PyPI Version][pypi-v-image]][pypi-v-link]
 [![Build Status][travis-image]][travis-link]
 
@@ -11,6 +7,17 @@ pynd helps you navigate and find what you are looking for in Python codebases.
 [pypi-v-link]: https://pypi.python.org/pypi/pynd
 [travis-image]: https://img.shields.io/travis/d0ugal/pynd/master.png
 [travis-link]: https://travis-ci.org/d0ugal/pynd
+
+You say it like *__find__*, but with a *__p__*. **pind**.
+
+pynd helps you navigate and find what you are looking for in Python codebases.
+
+* Find and list all public functions with `pynd --def --public`
+* Look for each time a class instance was created `pynd ClassName --call`
+* Search only within docstrings `pynd "search term" --doc `
+
+See further examples and the output further down...
+
 
 ## Installation
 
@@ -31,6 +38,7 @@ $ pynd -h
 We recommend Python 3.4 or above. pynd was written for Python 3 and backported
 to Python 2.7. It is supported and tested under Linux and OSX. Python 2 and
 Windows support are done on a "best effort" basis.
+
 
 ## What & Why?
 
@@ -119,7 +127,6 @@ $ pynd get_all_filters --def --call
 
 Note, this uses a simple name match - so if you have multiple functions with
 the same name, it will find them all.
-
 
 ### Docstrings
 
