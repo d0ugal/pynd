@@ -12,11 +12,15 @@ copyright: <a href="http://www.dougalmatthews.com/">Dougal Matthews</a>
 site_dir: build/docs
 
 markdown_extensions:
-    - toc:
-       permalink: ¶
-    - admonition:
-    - codehilite(css_class=code):
-    - footnotes:
+  - toc:
+    permalink: ¶
+  - admonition:
+  - codehilite(css_class=code):
+  - footnotes:
+
+google_analytics:
+  - 'UA-89549313-1'
+  - 'auto'
 
 extra:
   version: !!python/object/apply:getattr
