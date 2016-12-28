@@ -19,10 +19,6 @@ markdown_extensions:
     - footnotes:
 
 extra:
-  version: !!python/object/apply:getattr
-    - !!python/object/apply:__import__
-      - 'pynd'
-    - __version__
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
