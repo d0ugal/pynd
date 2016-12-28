@@ -130,22 +130,44 @@ properly?
 The above search will find all docstrings that contain TODO. If no term is 
 provided, then all docstrings will be displayed.
 
+### Public & Private
+
+The flags `--private` and `--public` can be used to filter by the common Python
+convention of a leading underscore to mark someting as private. This means
+that `--private` will only match results starting with a underscore and 
+`--public` will only match results starting without. These can be used in 
+combination with other searched but can't both be used together.
+
+```text
+pynd --private --def
+./pynd/astutils.py
+34:    def _is_python(self, path):
+38:    def _is_ignored(self, directory):
+44:    def _walk_files(self, path):
+66:    def _read(self, file_path):
+
+./pynd/filters.py
+101:    def _get_docstring(self, node):
+```
+
 ### Supported Node Types
 
 pynd currently supports the following node types.
 
+* `--doc` - matches within docstrings
 * `--class` - Matches classes.
 * `--def` - All function definitions.
-* `--import` - matches import statements
-* `--doc` - matches within docstrings
-* `--doc` - matches calls to functions or new classes
+* `--import` - Matches import statements
+* `--call` - Matches calls to functions or new classes
+* `--attr` - Matches attributes on objects
 
 ### Show full usage
 
 ```text
-usage: pynd [-h] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]] [--verbose]
-            [--debug] [--ignore-case] [--files-with-matches] [--show-stats]
-            [-d] [-c] [-f] [-i] [-C]
+usage: pynd [-h] [--version] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]]
+            [--ignore-case] [--files-with-matches] [--show-stats]
+            [--public | --private] [--verbose | --debug] [-d] [-c] [-f] [-i]
+            [-C] [-a]
             [PATTERN] [FILES OR DIRECTORIES [FILES OR DIRECTORIES ...]]
 
 Search for PATTERN in each Python file in filesystem from the current
@@ -160,20 +182,26 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  --version             show program's version number and exit
   --ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]
                         A pattern to exclude directories. This must be a valid
                         Python regular expression. It can be provided multiple
                         times.
-  --verbose             Explain what is happening.
-  --debug               Output excessively to make debugging easier
   --ignore-case         Make all the regular expression matching case
                         insesitive.
   --files-with-matches  Don't output all the results, just the paths to files
                         that contain a result.
   --show-stats          At the end, show some stats.
+  --public              Only show results considered to be public in Python.
+                        They don't start with an underscore.
+  --private             Only show results considered to be private in Python.
+                        They start with an underscore.
+  --verbose             Explain what is happening.
+  --debug               Output excessively to make debugging easier
   -d, --doc             Match class and function docstrings.
   -c, --class           Match class names.
   -f, --def             Match function names.
   -i, --import          Match imported package names.
   -C, --call            Match call statements.
+  -a, --attr            Match attributes on objects
 ```
