@@ -13,8 +13,8 @@
 import argparse
 import logging
 
-from . import filters
-
+from pynd import filters
+import pynd
 
 def create_parser():
     parser = argparse.ArgumentParser(description=(
@@ -23,6 +23,8 @@ def create_parser():
         only those are checked.
         """
     ))
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s {}'.format(pynd.__version__))
     parser.add_argument('pattern', metavar="PATTERN", default=".", nargs="?",
                         help=("The pattern to match against. This must be a "
                               "valid Python regular expression."))
