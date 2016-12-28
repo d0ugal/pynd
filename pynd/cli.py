@@ -52,7 +52,8 @@ def create_parser():
                            help=("Only show results considered to be public "
                                  "in Python. They don't start with an "
                                  "underscore."))
-    pub_mutex.add_argument('--private', action="store_const", const="^\_.*",
+    pub_mutex.add_argument('--private', action="store_const",
+                           const="^(?!__.*$)_.*$",
                            help=("Only show results considered to be private "
                                  "in Python. They start with an underscore."))
 
