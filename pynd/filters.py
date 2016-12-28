@@ -78,7 +78,7 @@ class NodeTypeFilter(object):
         # properly?
         return linecache.getline(path, node.lineno)[:-1]
 
-    def cmp(self, node, patters):
+    def cmp(self, node, pattern):
         raise NotImplemented
 
 
@@ -89,9 +89,6 @@ class DocString(NodeTypeFilter):
 
     def _get_docstring(self, node):
         return ast.get_docstring(node)
-
-    def _include_all(self, node):
-        return False
 
     def cmp(self, node, pattern):
         docstring = ast.get_docstring(node)
