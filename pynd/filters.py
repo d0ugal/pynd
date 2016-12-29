@@ -84,6 +84,9 @@ class NodeTypeFilter(object):
 
         return result
 
+    def get_line_no(self, node):
+        return node.lineno if not isinstance(node, ast.Module) else 0
+
     def get_source(self, path, node):
         # TODO: Strippng the last line here is a hack - how should we do it
         # properly?
@@ -108,13 +111,13 @@ class DocString(NodeTypeFilter):
         LOG.debug("Comparing %r and %r", docstring, pattern.pattern)
         return pattern(docstring)
 
-    def get_source(self, path, node):
-        """Get the source line for a particular node.
+    def get_line_no(self, node):
+        return node.lineno if not isinstance(node, ast.Module) else 0
 
-        TODO: Strippng the last line here is a hack - how should we do it
-        properly?
-        """
-        return linecache.getline(path, node.lineno) + self._get_docstring(node)
+    def get_source(self, path, node):
+        """Get the source line for a particular node."""
+        lineno = self.get_line_no(node)
+        return linecache.getline(path, lineno) + self._get_docstring(node)
 
 
 class NameFilter(NodeTypeFilter):
@@ -183,7 +186,7 @@ def get_all_filters():
     """Return all the available filters"""
     return (
         # TODO: Add ast.Module to the docstring search.
-        DocString('d', 'doc', (ast.FunctionDef, ast.ClassDef, ),
+        DocString('d', 'doc', (ast.FunctionDef, ast.ClassDef, ast.Module),
                   help="Match class and function docstrings."),
         NameFilter('c', 'class', (ast.ClassDef, ),
                   help="Match class names."),

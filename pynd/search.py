@@ -32,7 +32,8 @@ def _print(colour, text):
 
 def display_result(filter_, file_path, node):
     source = filter_.get_source(file_path, node)
-    print("{}{}{}:{}".format(YELLOW, node.lineno, CLEAR, source))
+    lineno = filter_.get_line_no(node)
+    print("{}{}{}:{}".format(YELLOW, lineno, CLEAR, source))
 
 
 def print_file_path(file_path, first):
