@@ -183,8 +183,8 @@ pynd currently supports the following node types.
 ```text
 usage: pynd [-h] [--version] [--ignore-dir [IGNORE_DIR [IGNORE_DIR ...]]]
             [--ignore-case] [--files-with-matches] [--show-stats]
-            [--public | --private] [--verbose | --debug] [-d] [-c] [-f] [-i]
-            [-C] [-a]
+            [--public | --private] [--verbose | --debug] [-d] [-c] [-f] [-F]
+            [-m] [-j] [-i] [-C] [-a]
             [PATTERN] [FILES OR DIRECTORIES [FILES OR DIRECTORIES ...]]
 
 Search for PATTERN in each Python file in filesystem from the current
@@ -217,7 +217,10 @@ optional arguments:
   --debug               Output excessively to make debugging easier
   -d, --doc             Match class and function docstrings.
   -c, --class           Match class names.
-  -f, --def             Match function names.
+  -f, --def             Match all defs.
+  -F, --function        Match function names at the module level.
+  -m, --method          Match class method names.
+  -j, --closure         Match closure def names.
   -i, --import          Match imported package names.
   -C, --call            Match call statements.
   -a, --attr            Match attributes on objects
