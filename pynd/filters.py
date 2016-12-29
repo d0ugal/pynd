@@ -182,6 +182,20 @@ class ImportFilter(NodeTypeFilter):
         return False
 
 
+class DefFilter(NameFilter):
+
+    def __init__(self, short, name, types, parent_types, help):
+        super(DefFilter, self).__init__(short, name, types, help)
+        self.parent_types = parent_types
+
+    def match(self, node, patterns):
+
+        if not isinstance(node.parent, self.parent_types):
+            return
+
+        return super(DefFilter, self).match(node, patterns)
+
+
 def get_all_filters():
     """Return all the available filters"""
     return (
@@ -190,7 +204,13 @@ def get_all_filters():
                   help="Match class and function docstrings."),
         NameFilter('c', 'class', (ast.ClassDef, ),
                   help="Match class names."),
-        NameFilter('f', 'def', (ast.FunctionDef, ),
+        DefFilter('f', 'def', (ast.FunctionDef, ), (ast.AST, ),
+                  help="Match function names."),
+        DefFilter('F', 'function', (ast.FunctionDef, ), (ast.Module, ),
+                  help="Match function names."),
+        DefFilter('m', 'method', (ast.FunctionDef, ), (ast.ClassDef, ),
+                  help="Match function names."),
+        DefFilter('j', 'closure', (ast.FunctionDef, ), (ast.FunctionDef, ),
                   help="Match function names."),
         ImportFilter('i', 'import', (ast.Import, ast.ImportFrom, ),
                      help="Match imported package names."),

@@ -69,13 +69,36 @@ class ASTWalker(object):
         with io.open(file_path, "r", encoding="utf-8") as source_file:
             return source_file.read()
 
+    def _walk_ast(self, node, top=False):
+        if not hasattr(node, 'parent'):
+            node.parent = None
+            node.parents = []
+        for field, value in ast.iter_fields(node):
+            if isinstance(value, list):
+                for index, item in enumerate(value):
+                    if isinstance(item, ast.AST):
+                        self._walk_ast(item)
+                        self._set_parnt_fields(item, node, field, index)
+            elif isinstance(value, ast.AST):
+                self._walk_ast(value)
+                self._set_parnt_fields(value, node, field)
+
+        if top:
+            return ast.walk(node)
+
+    def _set_parnt_fields(self, node, parent, field, index=None):
+        node.parent = parent
+        node.parents.append(parent)
+        node.parent_field = field
+        node.parent_field_index = index
+
     def walk(self):
         for path in self.paths:
             LOG.info("Searching %s", path)
             for file_path in self._walk_files(path):
                 try:
                     source = self._read(file_path)
-                    yield file_path, ast.walk(ast.parse(source))
+                    yield file_path, self._walk_ast(ast.parse(source), top=True)
                 except SyntaxError:
                     LOG.exception("Failed to parse %s. Could it be a "
                                   "incompatible Python version?", file_path)

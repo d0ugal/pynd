@@ -1,0 +1,15 @@
+"""
+Module docstring
+"""
+
+import mything
+from mything import apples
+
+
+def module_def():
+    return mythong.somecall()
+
+class TestClass(object):
+    
+    def method_def(self):
+        apples.juice()
