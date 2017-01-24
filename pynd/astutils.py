@@ -100,7 +100,7 @@ class ASTWalker(object):
                     source = self._read(file_path)
                     yield file_path, self._walk_ast(ast.parse(source), top=True)
                 except SyntaxError:
-                    LOG.exception("Failed to parse %s. Could it be a "
-                                  "incompatible Python version?", file_path)
+                    LOG.error("Failed to parse %s. Could it be a "
+                              "incompatible Python version?", file_path)
                 except UnicodeDecodeError:
                     LOG.exception("Failed to decode %s.")
