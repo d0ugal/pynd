@@ -34,7 +34,7 @@ class VersionAction(argparse.Action):
             version = parser.version
         python_version = platform.python_version()
         formatter = parser._get_formatter()
-        formatter.add_text(f"{version} (Python {python_version})")
+        formatter.add_text("{} (Python {})".format(version, python_version)
         parser._print_message(formatter.format_help(), sys.stdout)
         parser.exit()
 
