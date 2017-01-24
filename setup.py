@@ -14,7 +14,6 @@
 # limitations under the License.
 
 import setuptools
-import sys
 
 # In python < 2.7.4, a lazy loading of package `pbr` will break
 # setuptools if some other modules registered functions in `atexit`.
@@ -26,12 +25,4 @@ except ImportError:
 
 setuptools.setup(
     setup_requires=['pbr>=1.8'],
-    pbr=True,
-    entry_points={
-        "console_scripts": [
-            "pynd=pynd.__main__:main",
-            "pynd%s=pynd.__main__:main" % sys.version[:1],
-            "pynd%s=pynd.__main__:main" % sys.version[:3],
-        ],
-    },
-)
+    pbr=True)
