@@ -12,9 +12,31 @@
 
 import argparse
 import logging
+import platform
+import sys
 
 import pynd
 from pynd import filters
+
+
+class VersionAction(argparse.Action):
+
+    def __init__(self, option_strings, version=None, dest=argparse.SUPPRESS,
+                 default=argparse.SUPPRESS,
+                 help="show program's version number and exit"):
+        super(VersionAction, self).__init__(option_strings=option_strings,
+            dest=dest, default=default, nargs=0, help=help)
+        self.version = version
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        version = self.version.strip()
+        if version is None:
+            version = parser.version
+        python_version = platform.python_version()
+        formatter = parser._get_formatter()
+        formatter.add_text(f"{version} (Python {python_version})")
+        parser._print_message(formatter.format_help(), sys.stdout)
+        parser.exit()
 
 
 def create_parser():
@@ -24,7 +46,7 @@ def create_parser():
         only those are checked.
         """
     ))
-    parser.add_argument('--version', action='version',
+    parser.add_argument('--version', action=VersionAction,
                         version='%(prog)s {}'.format(pynd.__version__))
     parser.add_argument('pattern', metavar="PATTERN", default=".", nargs="?",
                         help=("The pattern to match against. This must be a "
